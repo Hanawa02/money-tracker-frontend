@@ -55,8 +55,8 @@ module.exports = {
       spacing: {
         icon: "1.34em",
       },
-      minWidth:{
-        32: "8rem"
+      minWidth: {
+        32: "8rem",
       },
       boxShadow: {
         "card": `0px 1px 4px hsla(${GRAY_BASE_HS}, 0%, 0.25)`,

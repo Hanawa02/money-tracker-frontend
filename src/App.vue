@@ -8,4 +8,9 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useMainStore } from "~/stores/main.store";
+
+const mainStore = useMainStore();
+mainStore.loadData();
+</script>

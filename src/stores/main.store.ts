@@ -65,5 +65,8 @@ export const useMainStore = defineStore("Main", {
         return list;
       };
     },
+    getAccountById(state) {
+      return (id: string) => state.accounts.find((item) => item.id === id);
+    },
   },
 });

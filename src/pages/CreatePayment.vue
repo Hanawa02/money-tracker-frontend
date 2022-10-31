@@ -1,9 +1,23 @@
 <template>
   <div class="p-4">
-    <account-selector
-      label="Filter for account:"
-      @change="updateSelectedAccount"
-    ></account-selector>
+    <div class="p-3 text-lg flex mb-8">
+      <label class="flex-shrink-0 font-bold pr-2">Filter for account:</label>
+      <select
+        name="account"
+        :value="selectedAccount?.id"
+        @change="updateSelectedAccount"
+        class="w-full text-center"
+      >
+        <option value="">None</option>
+        <option
+          v-for="account of accounts"
+          :key="account.id"
+          :value="account.id"
+        >
+          {{ account.name }}
+        </option>
+      </select>
+    </div>
     <div class="flex gap-8 justify-between flex-wrap">
       <div
         v-for="snapshot of snapshots"
@@ -32,17 +46,23 @@
 import { computed, ref } from "vue";
 import { useMainStore } from "~/stores/main.store";
 
-import AccountSelector from "~/components/AccountSelector.vue";
-
 const mainStore = useMainStore();
+
+mainStore.loadData();
 
 const selectedAccount = computed(() => mainStore.selectedAccount);
 
-function updateSelectedAccount(accountId: string) {
-  mainStore.selectedAccount = mainStore.accounts.find(
-    (item) => item.id === accountId
-  );
+function updateSelectedAccount(event: Event) {
+  const newValue = (event?.target as HTMLSelectElement).value;
+  console.log(newValue);
+
+  if (newValue !== selectedAccount.value?.id) {
+    mainStore.selectedAccount = mainStore.accounts.find(
+      (item) => item.id === newValue
+    );
+  }
 }
+const accounts = computed(() => mainStore.accounts);
 const snapshots = computed(() =>
   mainStore.filteredSnapshots(selectedAccount.value)
 );

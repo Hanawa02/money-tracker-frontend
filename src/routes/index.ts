@@ -1,19 +1,18 @@
 import { createRouter, createWebHistory } from "vue-router";
+import CreateCost from "~/pages/CreateCost.vue";
 
 import Home from "~/pages/HomePage.vue";
-
-declare module "vue-router" {
-  export interface RouteMeta {
-    titleTranslationKey: string;
-  }
-}
 
 export const routes = {
   homePage: {
     path: "/",
     component: Home,
     name: "home",
-    meta: { titleTranslationKey: "pages.home" },
+  },
+  createCostPage: {
+    path: "/cost/new",
+    component: CreateCost,
+    name: "createCost",
   },
 };
 

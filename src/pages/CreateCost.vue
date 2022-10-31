@@ -128,7 +128,7 @@ function addCost() {
   const payload = {
     method: "POST",
     data: {
-      debtors: debtors.value,
+      debtors: debtors.value.map(d => ({ account_id: d.accountId, percentage: d.percentage })),
       amount: amount.value,
       description: description.value,
       tags: tags.value.split(",").map((item) => item.trim()),

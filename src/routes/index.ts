@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import CreateCost from "~/pages/CreateCost.vue";
+import CreatePayment from "~/pages/CreatePayment.vue";
 
 import Home from "~/pages/HomePage.vue";
 import paths from "~/routes/paths";
@@ -14,6 +15,11 @@ export const routes = {
     path: paths.createCostPage,
     component: CreateCost,
     name: "createCost",
+  },
+  createPaymentPage: {
+    path: paths.createPaymentPage,
+    component: CreatePayment,
+    name: "createPayment",
   },
 };
 

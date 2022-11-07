@@ -75,6 +75,19 @@
         </div>
       </div>
     </div>
+    <div
+      v-if="errorMessage"
+      class="
+        bg-lightest-red
+        text-dark-red
+        rounded
+        p-3
+        mb-8
+        border border-light-red
+      "
+    >
+      {{ errorMessage }}
+    </div>
     <button
       @click="addCost"
       class="bg-red text-white px-4 py-3 rounded text-md font-medium w-full"
@@ -92,6 +105,8 @@ import { useAxios } from "@vueuse/integrations/useAxios";
 import Account from "~/interfaces/account";
 import AccountSelector from "~/components/AccountSelector.vue";
 import { useDateFormat } from "@vueuse/core";
+import routePaths from "~/routes/paths";
+import { useRouter } from "vue-router";
 
 const mainStore = useMainStore();
 
@@ -124,11 +139,21 @@ function addDebtor() {
   });
 }
 
-function addCost() {
+const router = useRouter();
+function goToHomePage() {
+  router.push(routePaths.homePage);
+}
+
+const errorMessage = ref("");
+
+async function addCost() {
   const payload = {
     method: "POST",
     data: {
-      debtors: debtors.value.map(d => ({ account_id: d.accountId, percentage: d.percentage })),
+      debtors: debtors.value.map((d) => ({
+        account_id: d.accountId,
+        percentage: d.percentage,
+      })),
       amount: amount.value,
       description: description.value,
       tags: tags.value.split(",").map((item) => item.trim()),
@@ -136,12 +161,22 @@ function addCost() {
     },
   };
 
-  const { data, isFinished } = useAxios(
+  const { data, error } = await useAxios(
     `account/${payer.value?.id}/cost`,
     payload,
     instance
   );
 
-  console.log(data, isFinished);
+  console.log(data, error);
+  if (data.value && !error.value) {
+    mainStore.loadData();
+    goToHomePage();
+    return;
+  }
+
+  if (error) {
+    errorMessage.value =
+      error.value?.response?.data.error || error.value?.response?.data || "";
+  }
 }
 </script>

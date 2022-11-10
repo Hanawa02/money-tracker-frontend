@@ -9,8 +9,12 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from "vue";
 import { useMainStore } from "~/stores/main.store";
 
 const mainStore = useMainStore();
-mainStore.loadData();
+
+onMounted(() => {
+  mainStore.loadData();
+});
 </script>

@@ -33,41 +33,43 @@
         <div v-if="!snapshots?.length" class="">No snapshots</div>
       </div>
     </div>
-    <div class="grid grid-cols-2 gap-4 w-full fixed bottom-0 left-0 py-4 px-4">
-      <m-button
-        v-if="selectedAccount"
-        class="border border-mid-primary text-mid-primary mx-auto w-full"
-        @click="goToCreatePaymentPage"
-      >
-        New Payment
-      </m-button>
-      <m-button
-        v-if="selectedAccount"
-        class="
-          border border-dark-primary
-          bg-dark-primary
-          text-white
-          mx-auto
-          w-full
-        "
-        @click="goToCreateCostPage"
-      >
-        New Cost
-      </m-button>
-      <m-button
-        v-if="selectedAccount"
-        class="border border-mid-gray text-mid-gray mx-auto w-full"
-        @click="clearSelectedAccount"
-      >
-        Logout
-      </m-button>
-      <m-button
-        class="bg-dark-gray text-white mx-auto w-full"
-        :class="{ 'col-span-2': !selectedAccount }"
-        @click="goToCreateAccountPage"
-      >
-        Create Account
-      </m-button>
+    <div class="fixed bottom-0 left-0 w-full">
+      <div class="grid grid-cols-2 gap-4 py-4 px-4 w-full max-w-md mx-auto">
+        <m-button
+          v-if="selectedAccount"
+          class="border border-mid-primary text-mid-primary mx-auto w-full"
+          @click="goToCreatePaymentPage"
+        >
+          New Payment
+        </m-button>
+        <m-button
+          v-if="selectedAccount"
+          class="
+            border border-dark-primary
+            bg-dark-primary
+            text-white
+            mx-auto
+            w-full
+          "
+          @click="goToCreateCostPage"
+        >
+          New Cost
+        </m-button>
+        <m-button
+          v-if="selectedAccount"
+          class="border border-mid-gray text-mid-gray mx-auto w-full"
+          @click="clearSelectedAccount"
+        >
+          Logout
+        </m-button>
+        <m-button
+          class="bg-dark-gray text-white mx-auto w-full"
+          :class="{ 'col-span-2': !selectedAccount }"
+          @click="goToCreateAccountPage"
+        >
+          Create Account
+        </m-button>
+      </div>
     </div>
   </div>
 </template>

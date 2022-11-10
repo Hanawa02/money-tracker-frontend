@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full min-h-screen h-full">
+  <div class="w-full min-h-screen h-full max-w-md mx-auto">
     <router-view v-slot="{ Component }">
       <transition name="fade">
         <component :is="Component" />

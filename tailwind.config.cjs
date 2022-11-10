@@ -1,5 +1,5 @@
 const GRAY_BASE_HS = "274, 5%";
-const PRIMARY_BASE_HS = "126, 60%";
+const PRIMARY_BASE_HS = "126, 70%";
 const RED_BASE_HS = "0, 67%";
 
 module.exports = {
@@ -24,7 +24,7 @@ module.exports = {
       "extra-light-red": `hsl(${RED_BASE_HS}, 85%)`,
       "light-red": `hsl(${RED_BASE_HS}, 70%)`,
       "red": `hsl(${RED_BASE_HS}, 57%)`,
-      "mid-red": `hsl(${RED_BASE_HS}, 36%)`,
+      "mid-red": `hsl(${RED_BASE_HS}, 40%)`,
       "dark-red": `hsl(${RED_BASE_HS}, 28%)`,
       "darkest-red": `hsl(${RED_BASE_HS}, 15%)`,
 

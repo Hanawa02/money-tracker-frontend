@@ -31,6 +31,7 @@
       border-primary border
       rounded
       mb-2
+      cursor-pointer
     "
     @click="updateSelectedAccount(account.id)"
   >

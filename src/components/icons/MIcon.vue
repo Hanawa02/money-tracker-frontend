@@ -1,7 +1,7 @@
 <template>
-  <div class="inline-block" @click="handleClickEvent">
+  <div @click="handleClickEvent">
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <component :is="iconTag" />
+      <IconComponent />
     </svg>
   </div>
 </template>
@@ -9,12 +9,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-// @ts-ignore
-import CloseIcon from "~/components/icons/CloseIcon.vue";
-// @ts-ignore
-import PersonIcon from "~/components/icons/PersonIcon.vue";
-// @ts-ignore
-import SearchIcon from "~/components/icons/SearchIcon.vue";
+import { defineAsyncComponent } from "vue";
 
 interface IProps {
   icon: string;
@@ -25,8 +20,17 @@ const emit = defineEmits<{
   (_event: "click", _mouseEvent: MouseEvent): void;
 }>();
 
-const iconTag = computed((): string => {
-  return `${props.icon}-icon`;
+const iconName = computed((): string => {
+  const nameParts = props.icon.split("-");
+
+  return nameParts
+    .map((item) => item[0].toUpperCase() + item.slice(1))
+    .join("");
+});
+
+const IconComponent = defineAsyncComponent(() => {
+  console.log(iconName.value);
+  return import(`~/components/icons/${iconName.value}Icon.vue`);
 });
 
 function handleClickEvent(event: MouseEvent): void {

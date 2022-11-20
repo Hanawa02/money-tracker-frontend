@@ -26,7 +26,7 @@
     >
       <span class="text-primary pr-2">{{ selectedAccount.name }}</span>
       <div class="p-1 rounded-full bg-lightest-gray">
-        <person-icon class="flex-shrink-0 w-6 h-6 text-dark-primary" />
+        <m-icon icon="person" class="flex-shrink-0 w-6 h-6 text-mid-gray" />
       </div>
     </h1>
     <div
@@ -98,7 +98,7 @@ import routePaths from "~/routes/paths";
 import AccountSearchSelector from "~/components/AccountSearchSelector.vue";
 import SnapshotCard from "~/components/SnapshotCard.vue";
 import MButton from "~/components/MButton.vue";
-import PersonIcon from "~/components/Icons/PersonIcon.vue";
+import MIcon from "~/components/icons/MIcon.vue";
 
 const mainStore = useMainStore();
 

@@ -4,3 +4,4 @@
     fill="currentColor"
   />
 </template>
+<script lang="ts" setup></script>

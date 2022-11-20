@@ -11,7 +11,10 @@
       rounded
     "
   >
-    <search-icon class="w-6 h-6 text-primary flex-shrink-0 outline-none z-10" />
+    <m-icon
+      icon="search"
+      class="w-6 h-6 text-primary flex-shrink-0 outline-none z-10"
+    />
     <input
       type="text"
       placeholder="search"
@@ -35,7 +38,7 @@
     "
     @click="updateSelectedAccount(account.id)"
   >
-    <person-icon class="text-primary w-6 h-6" />
+    <m-icon icon="person" class="text-primary w-6 h-6" />
     <span class="font-medium text-md">{{ account.name }}</span>
   </div>
 
@@ -51,8 +54,7 @@
 import { computed, ref } from "vue";
 import { useMainStore } from "~/stores/main.store";
 
-import PersonIcon from "~/components/Icons/PersonIcon.vue";
-import SearchIcon from "~/components/Icons/SearchIcon.vue";
+import MIcon from "~/components/icons/MIcon.vue";
 import Account from "~/interfaces/account";
 
 const mainStore = useMainStore();

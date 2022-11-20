@@ -95,15 +95,15 @@ const snapshots = computed(() =>
 
 const router = useRouter();
 function goToCreateCostPage() {
-  router.push(routePaths.createCostPage);
+  router.push(routePaths.createCostPage.path);
 }
 
 function goToCreatePaymentPage() {
-  router.push(routePaths.createPaymentPage);
+  router.push(routePaths.createPaymentPage.path);
 }
 
 function goToCreateAccountPage() {
-  router.push(routePaths.createAccountPage);
+  router.push(routePaths.createAccountPage.path);
 }
 
 function clearSelectedAccount(): void {

@@ -46,7 +46,7 @@ const instance = axios.create({
 
 const router = useRouter();
 function goToHomePage() {
-  router.push(routePaths.homePage);
+  router.push(routePaths.homePage.path);
 }
 
 const errorMessage = ref("");

@@ -1,9 +1,15 @@
 <template>
   <div class="p-4 max-w-md mx-auto">
-    <div class="flex mb-4">
-      <label class="pr-2">Name:</label>
-      <input type="text" v-model="name" class="border-b w-full text-center" />
-    </div>
+    <h1 class="text-3xl text-center mb-8 font-bold text-dark-primary">
+      {{ $t("pages.createAccount.header") }}
+    </h1>
+    <text-input
+      v-model="name"
+      id="account name"
+      label="Name"
+      :required="true"
+      class="mb-8"
+    ></text-input>
 
     <div
       v-if="errorMessage"
@@ -20,9 +26,18 @@
     </div>
     <button
       @click="addAccount"
-      class="bg-red text-white px-4 py-3 rounded text-md font-medium w-full"
+      class="
+        bg-mid-primary
+        text-white
+        px-4
+        py-3
+        rounded
+        text-md
+        font-medium
+        w-full
+      "
     >
-      Add Account
+      {{ $t("pages.createAccount.addAccountButton") }}
     </button>
   </div>
 </template>
@@ -35,10 +50,11 @@ import { useAxios } from "@vueuse/integrations/useAxios";
 import routePaths from "~/routes/paths";
 import { useRouter } from "vue-router";
 
+import TextInput from "~/components/TextInput.vue";
+
 const mainStore = useMainStore();
 
 const name = ref<string>("");
-const eventDate = ref<Date>(new Date());
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,

@@ -3,10 +3,11 @@ import App from "./App.vue";
 import "./index.css";
 import routes from "./routes";
 import { createPinia } from "pinia";
+import i18n from "./locales";
 
 const app = createApp(App);
 app.use(routes);
 app.use(createPinia());
-// app.use(i18n);
+app.use(i18n);
 
 app.mount("#app");

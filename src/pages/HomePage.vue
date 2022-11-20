@@ -2,27 +2,39 @@
   <div class="p-4">
     <template v-if="!selectedAccount">
       <h1 class="text-center mb-4 font-medium text-primary text-2xl w-full">
-        Welcome to money tracker!
+        {{ $t("pages.home.introduction") }}
       </h1>
       <h2 class="text-darkest-primary text-center mb-4">
-        Select your account to start using the app.
+        {{ $t("pages.home.selectAccountText") }}
       </h2>
       <account-search-selector />
     </template>
 
     <h1
       v-if="selectedAccount"
-      class="text-center font-medium text-2xl w-full mb-4"
+      class="
+        flex
+        items-center
+        justify-end
+        font-medium
+        text-2xl
+        w-full
+        mb-4
+        pb-2
+        border-b border-light-gray
+      "
     >
-      Welcome <span class="text-primary">{{ selectedAccount.name }}</span
-      >!
+      <span class="text-primary pr-2">{{ selectedAccount.name }}</span>
+      <div class="p-1 rounded-full bg-lightest-gray">
+        <person-icon class="flex-shrink-0 w-6 h-6 text-dark-primary" />
+      </div>
     </h1>
     <div
       v-if="selectedAccount"
       class="flex-col bg-lightest-gray rounded-md p-4"
     >
       <h2 class="text-lg font-medium text-dark-primary mb-4 w-full">
-        Your status:
+        {{ $t("pages.home.status") }}
       </h2>
       <div class="flex gap-8 justify-between flex-wrap">
         <snapshot-card
@@ -30,7 +42,9 @@
           :key="snapshot.lender_account.id"
           :snapshot="snapshot"
         />
-        <div v-if="!snapshots?.length" class="">No snapshots</div>
+        <div v-if="!snapshots?.length" class="">
+          {{ $t("pages.home.noSnapshot") }}
+        </div>
       </div>
     </div>
     <div class="fixed bottom-0 left-0 w-full">
@@ -40,7 +54,7 @@
           class="border border-mid-primary text-mid-primary mx-auto w-full"
           @click="goToCreatePaymentPage"
         >
-          New Payment
+          {{ $t("pages.home.newPayment") }}
         </m-button>
         <m-button
           v-if="selectedAccount"
@@ -53,21 +67,21 @@
           "
           @click="goToCreateCostPage"
         >
-          New Cost
+          {{ $t("pages.home.newCost") }}
         </m-button>
         <m-button
           v-if="selectedAccount"
           class="border border-mid-gray text-mid-gray mx-auto w-full"
           @click="clearSelectedAccount"
         >
-          Logout
+          {{ $t("pages.home.logout") }}
         </m-button>
         <m-button
           class="bg-dark-gray text-white mx-auto w-full"
           :class="{ 'col-span-2': !selectedAccount }"
           @click="goToCreateAccountPage"
         >
-          Create Account
+          {{ $t("pages.home.newAccount") }}
         </m-button>
       </div>
     </div>
@@ -84,6 +98,7 @@ import routePaths from "~/routes/paths";
 import AccountSearchSelector from "~/components/AccountSearchSelector.vue";
 import SnapshotCard from "~/components/SnapshotCard.vue";
 import MButton from "~/components/MButton.vue";
+import PersonIcon from "~/components/Icons/PersonIcon.vue";
 
 const mainStore = useMainStore();
 

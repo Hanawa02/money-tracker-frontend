@@ -9,7 +9,7 @@
     <account-selector
       label="Pay To"
       @change="updateLender"
-      :selectedAccountId="payer?.id"
+      :selectedAccountId="lender?.id"
       class="mb-4"
     ></account-selector>
     <div class="flex mb-4">

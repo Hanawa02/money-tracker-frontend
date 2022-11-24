@@ -1,5 +1,14 @@
 <template>
   <div class="p-4 max-w-md mx-auto">
+    <h1 class="text-3xl text-center mb-8 font-bold text-dark-primary">
+      {{ $t("pages.createPayment.header") }}
+    </h1>
+    <date-input
+      v-model="eventDate"
+      :label="$t('pages.createPayment.dateInput.label')"
+      id="event-date"
+      class="mb-4"
+    ></date-input>
     <account-selector
       label="From"
       @change="updatePayer"
@@ -12,63 +21,59 @@
       :selectedAccountId="lender?.id"
       class="mb-4"
     ></account-selector>
-    <div class="flex mb-4">
-      <label class="pr-2">Date:</label>
-      <input
-        type="date"
-        v-model="eventDate"
-        class="border-b w-full text-center"
-      />
-    </div>
-    <div class="flex mb-4">
-      <label class="pr-2">Description:</label>
-      <input
-        type="text"
-        v-model="description"
-        class="border-b w-full text-center"
-      />
-    </div>
-    <div class="flex mb-4">
-      <label class="pr-2">Amount:</label>
-      <input
-        type="number"
-        v-model="amount"
-        class="border-b w-full text-center"
-      />
-    </div>
+
+    <text-input
+      v-model="description"
+      id="event-description"
+      :label="$t('pages.createPayment.descriptionInput.label')"
+      :placeholder="$t('pages.createPayment.descriptionInput.placeholder')"
+      class="mb-4"
+    />
+    <number-input
+      v-model="amount"
+      id="event-description"
+      :label="$t('pages.createPayment.amountInput.label')"
+      class="mb-4"
+    />
 
     <div
       v-if="errorMessage"
-      class="
-        bg-lightest-red
-        text-dark-red
-        rounded
-        p-3
-        mb-8
-        border border-light-red
-      "
+      class="bg-lightest-red text-dark-red rounded p-3 border border-light-red"
     >
       {{ errorMessage }}
     </div>
-    <button
-      @click="addPayment"
-      class="bg-red text-white px-4 py-3 rounded text-md font-medium w-full"
-    >
-      Add Payment
-    </button>
+
+    <div class="flex gap-4 mt-8">
+      <m-button
+        @click="goBack"
+        class="bg-white border-mid-primary border text-mid-primary w-full"
+      >
+        {{ $t("pages.createPayment.cancelButton") }}
+      </m-button>
+      <m-button @click="addPayment" class="bg-mid-primary text-white w-full">
+        {{ $t("pages.createPayment.addPaymentButton") }}
+      </m-button>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { useMainStore } from "~/stores/main.store";
 import axios from "axios";
-import { useAxios } from "@vueuse/integrations/useAxios";
-import Account from "~/interfaces/account";
-import AccountSelector from "~/components/AccountSelector.vue";
-import { useDateFormat } from "@vueuse/core";
-import routePaths from "~/routes/paths";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import { useAxios } from "@vueuse/integrations/useAxios";
+import { useDateFormat } from "@vueuse/core";
+
+import { useMainStore } from "~/stores/main.store";
+import routePaths from "~/routes/paths";
+
+import Account from "~/interfaces/account";
+
+import AccountSelector from "~/components/AccountSelector.vue";
+import DateInput from "~/components/DateInput.vue";
+import TextInput from "~/components/TextInput.vue";
+import NumberInput from "~/components/NumberInput.vue";
+import MButton from "~/components/MButton.vue";
 
 const mainStore = useMainStore();
 
@@ -79,6 +84,10 @@ const lender = ref<Account | undefined>(undefined);
 const amount = ref<number>(0);
 const description = ref<string>("");
 const eventDate = ref<Date>(new Date());
+
+onMounted(() => {
+  eventDate.value = new Date();
+});
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -127,5 +136,9 @@ async function addPayment() {
     errorMessage.value =
       error.value?.response?.data.error || error.value?.response?.data || "";
   }
+}
+
+function goBack() {
+  router.back();
 }
 </script>

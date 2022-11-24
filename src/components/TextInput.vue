@@ -2,7 +2,7 @@
   <div
     :class="`
       flex items-center pt-2 pb-3 px-4
-      border rounded-xl shadow-card group ${
+      border rounded-lg shadow-card group ${
         hasError
           ? 'border-red'
           : 'border-transparent focus-within:border-light-primary'

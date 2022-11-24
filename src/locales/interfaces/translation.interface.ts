@@ -1,9 +1,7 @@
-import HomePage from "~/locales/interfaces/pages/home-page.interface";
-import CreateAccountPage from "~/locales/interfaces/pages/create-account-page.interface";
+import Pages from "~/locales/interfaces/pages/index.interface";
+import Components from "~/locales/interfaces/components/index.interface";
 
 export default interface Translation {
-  pages: {
-    home: HomePage;
-    createAccount: CreateAccountPage;
-  };
+  pages: Pages;
+  components: Components;
 }

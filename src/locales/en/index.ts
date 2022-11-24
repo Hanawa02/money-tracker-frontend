@@ -1,12 +1,10 @@
 import Translation from "~/locales/interfaces/translation.interface";
 
-import home from "./pages/home-page.message";
-import createAccount from "./pages/create-account-page.message";
+import components from "./components/index.message";
+import pages from "./pages/index.message";
 
 const translation: Translation = {
-  pages: {
-    home,
-    createAccount,
-  },
+  pages: pages,
+  components: components,
 };
 export default translation;

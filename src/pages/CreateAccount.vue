@@ -24,21 +24,17 @@
     >
       {{ errorMessage }}
     </div>
-    <button
-      @click="addAccount"
-      class="
-        bg-mid-primary
-        text-white
-        px-4
-        py-3
-        rounded
-        text-md
-        font-medium
-        w-full
-      "
-    >
-      {{ $t("pages.createAccount.addAccountButton") }}
-    </button>
+    <div class="flex gap-4">
+      <m-button
+        @click="goBack"
+        class="bg-white border-mid-primary border text-mid-primary w-full"
+      >
+        {{ $t("pages.createAccount.cancelButton") }}
+      </m-button>
+      <m-button @click="addAccount" class="bg-mid-primary text-white w-full">
+        {{ $t("pages.createAccount.addAccountButton") }}
+      </m-button>
+    </div>
   </div>
 </template>
 
@@ -51,6 +47,7 @@ import routePaths from "~/routes/paths";
 import { useRouter } from "vue-router";
 
 import TextInput from "~/components/TextInput.vue";
+import MButton from "~/components/MButton.vue";
 
 const mainStore = useMainStore();
 
@@ -87,5 +84,9 @@ async function addAccount() {
     errorMessage.value =
       error.value?.response?.data.error || error.value?.response?.data || "";
   }
+}
+
+function goBack() {
+  router.back();
 }
 </script>

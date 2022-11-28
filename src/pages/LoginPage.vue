@@ -1,7 +1,7 @@
 <template>
-  <div class="p-4">
+  <div class="p-4 min-h-screen h-full flex flex-col justify-center">
     <h1 class="text-center mb-4 font-medium text-primary text-2xl w-full">
-      Welcome to money tracker!
+      {{ $t("pages.login.introduction") }}
     </h1>
     <h2 class="text-darkest-primary text-center mb-4"></h2>
 

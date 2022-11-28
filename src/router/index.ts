@@ -7,6 +7,7 @@ import CreatePayment from "~/pages/CreatePayment.vue";
 import Home from "~/pages/HomePage.vue";
 import Login from "~/pages/LoginPage.vue";
 import authGuard from "./guards/auth.guard";
+import guards from "./guards";
 
 export const routes = [
   {
@@ -36,5 +37,7 @@ const router = createRouter({
   routes: routes,
 });
 
-router.beforeEach(authGuard);
+// add global guards
+guards.forEach((guard) => router.beforeEach(guard));
+
 export default router;

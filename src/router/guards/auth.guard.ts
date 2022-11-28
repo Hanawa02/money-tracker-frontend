@@ -1,4 +1,3 @@
-import axios from "axios";
 import { RouteLocationNormalized } from "vue-router";
 import { useAuthStore } from "~/stores/auth.store";
 import { useMainStore } from "~/stores/main.store";

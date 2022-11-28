@@ -167,7 +167,6 @@ async function addCost() {
     instance
   );
 
-  console.log(data, error);
   if (data.value && !error.value) {
     mainStore.loadData();
     goToHomePage();

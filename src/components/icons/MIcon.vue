@@ -29,7 +29,6 @@ const iconName = computed((): string => {
 });
 
 const IconComponent = defineAsyncComponent(() => {
-  console.log(iconName.value);
   return import(`~/components/icons/${iconName.value}Icon.vue`);
 });
 

@@ -42,7 +42,7 @@ import MLabel from "~/components/MLabel.vue";
 interface IProps {
   label?: string;
   placeholder?: string;
-  modelValue: Date; // internal reference to v-model
+  modelValue: string; // internal reference to v-model
   required?: boolean;
   id: string;
   autofocus?: boolean;
@@ -50,8 +50,8 @@ interface IProps {
 const props = withDefaults(defineProps<IProps>(), { required: false });
 
 const emit = defineEmits<{
-  (_event: "change", _value: Date): void;
-  (_event: "update:modelValue", _value: Date): void;
+  (_event: "change", _value: string): void;
+  (_event: "update:modelValue", _value: string): void;
 }>();
 
 const hasError = ref(false);
@@ -62,13 +62,13 @@ onMounted((): void => {
   }
 });
 
-function validateInput(newValue: Date): void {
+function validateInput(newValue: string): void {
   hasError.value = props.required && !newValue;
 }
 
 function updateValue(event: Event): void {
   // TODO: does this part work, if yes which type is the correct one?
-  const value: Date = (event as any)?.target?.value;
+  const value: string = (event as any)?.target?.value;
   validateInput(value);
   emit("update:modelValue", value);
   emit("change", value);

@@ -83,10 +83,10 @@ const payer = ref<Account | undefined>(undefined);
 const lender = ref<Account | undefined>(undefined);
 const amount = ref<number>(0);
 const description = ref<string>("");
-const eventDate = ref<Date>(new Date());
+const eventDate = ref<string>(new Date().toString());
 
 onMounted(() => {
-  eventDate.value = new Date();
+  eventDate.value = new Date().toString();
 });
 
 const instance = axios.create({

@@ -68,7 +68,8 @@ function validateInput(newValue: number): void {
 
 function updateValue(event: Event): void {
   // TODO: does this part work, if yes which type is the correct one?
-  const value: number = (event as any)?.target?.value;
+  const value: number = parseInt((event as any)?.target?.value);
+
   validateInput(value);
   emit("update:modelValue", value);
   emit("change", value);

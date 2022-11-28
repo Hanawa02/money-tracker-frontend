@@ -24,6 +24,7 @@ jobs:
           npm run build
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL}}
+          VITE_BASE_URL: ${{ secrets.VITE_BASE_URL}}
       - name: Upload dist folder
         uses: actions/upload-artifact@v3
         with:

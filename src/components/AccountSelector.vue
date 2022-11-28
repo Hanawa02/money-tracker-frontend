@@ -23,7 +23,7 @@
         class="w-full"
         :class="{ 'text-gray': !selectedAccountId }"
       >
-        <option value="" disabled selected class="text-gray">
+        <option value="" class="text-gray">
           {{ $t("components.accountSelector.noneSelected") }}
         </option>
         <option
@@ -40,15 +40,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useMainStore } from "~/stores/main.store";
 
 import MLabel from "~/components/MLabel.vue";
+import Account from "~/interfaces/account";
 
 interface IProps {
   label: string;
   selectedAccountId?: string;
   required?: boolean;
+  hiddenAccountIds?: string[];
 }
 
 const mainStore = useMainStore();
@@ -56,16 +58,34 @@ const mainStore = useMainStore();
 const props = withDefaults(defineProps<IProps>(), { required: false });
 const emit = defineEmits<{ (_event: "change", _accountId: string): void }>();
 
-function updateSelectedAccount(event: Event) {
-  const newValue = (event?.target as HTMLSelectElement).value;
-
-  validateInput(newValue);
-  if (newValue !== props.selectedAccountId) {
-    emit("change", newValue);
+function setSelectedAccount(accountId: string) {
+  validateInput(accountId);
+  if (accountId !== props.selectedAccountId) {
+    emit("change", accountId);
   }
 }
 
-const accounts = computed(() => mainStore.accounts);
+function updateSelectedAccount(event: Event) {
+  const newValue = (event?.target as HTMLSelectElement).value;
+  setSelectedAccount(newValue);
+}
+
+const accounts = computed(() => {
+  if (props.hiddenAccountIds && props.hiddenAccountIds.length > 0) {
+    return mainStore.accounts.filter(
+      (account) => !props.hiddenAccountIds?.includes(account.id)
+    );
+  }
+
+  return mainStore.accounts;
+});
+
+watch(accounts, (newAccounts: Account[]) => {
+  if (newAccounts.length === 1) {
+    const newValue = newAccounts[0].id;
+    setSelectedAccount(newValue);
+  }
+});
 
 const hasError = ref(false);
 

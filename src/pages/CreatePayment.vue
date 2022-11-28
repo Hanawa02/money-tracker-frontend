@@ -13,12 +13,14 @@
       label="From"
       @change="updatePayer"
       :selectedAccountId="payer?.id"
+      :hiddenAccountIds="hiddenAccountsForPayer"
       class="mb-4"
     ></account-selector>
     <account-selector
       label="Pay To"
       @change="updateLender"
       :selectedAccountId="lender?.id"
+      :hiddenAccountIds="hiddenAccountsForLender"
       class="mb-4"
     ></account-selector>
 
@@ -59,7 +61,7 @@
 
 <script setup lang="ts">
 import axios from "axios";
-import { onMounted, ref } from "vue";
+import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useAxios } from "@vueuse/integrations/useAxios";
 import { useDateFormat } from "@vueuse/core";
@@ -83,11 +85,7 @@ const payer = ref<Account | undefined>(undefined);
 const lender = ref<Account | undefined>(undefined);
 const amount = ref<number>(0);
 const description = ref<string>("");
-const eventDate = ref<string>(new Date().toString());
-
-onMounted(() => {
-  eventDate.value = new Date().toString();
-});
+const eventDate = ref<string>(useDateFormat(new Date(), "YYYY-MM-DD").value);
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -97,9 +95,25 @@ function updatePayer(id: string) {
   payer.value = mainStore.getAccountById(id);
 }
 
+const hiddenAccountsForPayer = computed(() => {
+  if (lender.value != undefined) {
+    return [lender.value.id];
+  }
+
+  return [];
+});
+
 function updateLender(id: string) {
   lender.value = mainStore.getAccountById(id);
 }
+
+const hiddenAccountsForLender = computed(() => {
+  if (payer.value != undefined) {
+    return [payer.value.id];
+  }
+
+  return [];
+});
 
 const router = useRouter();
 function goToHomePage() {

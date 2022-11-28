@@ -7,5 +7,5 @@ export default interface HomePage {
   newPayment: string;
   newCost: string;
   newAccount: string;
-  logout: string;
+  changeAccount: string;
 }

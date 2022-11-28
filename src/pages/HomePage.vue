@@ -74,7 +74,7 @@
           class="border border-mid-gray text-mid-gray mx-auto w-full"
           @click="clearSelectedAccount"
         >
-          {{ $t("pages.home.logout") }}
+          {{ $t("pages.home.changeAccount") }}
         </m-button>
         <m-button
           class="bg-dark-gray text-white mx-auto w-full"

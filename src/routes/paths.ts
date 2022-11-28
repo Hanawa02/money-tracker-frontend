@@ -23,9 +23,15 @@ const createAccountPage: RouteData = {
   name: "createAccount",
 };
 
+const loginPage: RouteData = {
+  path: "/login",
+  name: "login",
+};
+
 export default {
   homePage,
   createCostPage,
   createPaymentPage,
   createAccountPage,
+  loginPage,
 };

@@ -22,7 +22,12 @@ export const useMainStore = defineStore("Main", {
   },
   actions: {
     async loadAccounts() {
-      const result = await fetch(`${import.meta.env.VITE_API_URL}/account`);
+      const result = await fetch(`${import.meta.env.VITE_API_URL}/account`, {
+        headers: {
+          Authorization:
+            "Bearer 74suBHPaUWi/P/G/wRbutj5X6XbhYnUXGEuxXzHbsMotemHOryibF6atvyZOj8ULyeAjV8Ce1S0ZXE2XaHTuSQ==",
+        },
+      });
       return result.json();
     },
     async loadSnapshots() {
@@ -38,17 +43,32 @@ export const useMainStore = defineStore("Main", {
       return result.json();
     },
     async loadData() {
-      const [accounts, snapshots, costs, payments] = await Promise.all([
-        this.loadAccounts(),
-        this.loadSnapshots(),
-        this.loadCosts(),
-        this.loadPayments(),
-      ]);
+      // const [accounts, snapshots, costs, payments] = await Promise.all([
+      //   this.loadAccounts(),
+      //   this.loadSnapshots(),
+      //   this.loadCosts(),
+      //   this.loadPayments(),
+      // ]);
+      this.loadAccounts();
 
-      this.accounts = accounts;
-      this.snapshots = snapshots;
-      this.costs = costs;
-      this.payments = payments;
+      const lauraAccount = { id: "2", name: "Laura" };
+      const niklasAccount = { id: "1", name: "Niklas" };
+
+      this.accounts = [niklasAccount, lauraAccount]; // accounts;
+      this.snapshots = [
+        {
+          payer_account: lauraAccount,
+          lender_account: niklasAccount,
+          amount: 2.28,
+        },
+        {
+          payer_account: niklasAccount,
+          lender_account: lauraAccount,
+          amount: -2.28,
+        },
+      ]; //snapshots;
+      this.costs = [];
+      this.payments = [];
     },
   },
   getters: {

@@ -5,6 +5,7 @@ import CreateAccount from "~/pages/CreateAccount.vue";
 import CreateCost from "~/pages/CreateCost.vue";
 import CreatePayment from "~/pages/CreatePayment.vue";
 import Home from "~/pages/HomePage.vue";
+import Login from "~/pages/LoginPage.vue";
 
 export const routes = [
   {
@@ -22,6 +23,10 @@ export const routes = [
   {
     ...paths.createAccountPage,
     component: CreateAccount,
+  },
+  {
+    ...paths.loginPage,
+    component: Login,
   },
 ];
 

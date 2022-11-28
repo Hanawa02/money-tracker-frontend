@@ -6,6 +6,7 @@ import CreateCost from "~/pages/CreateCost.vue";
 import CreatePayment from "~/pages/CreatePayment.vue";
 import Home from "~/pages/HomePage.vue";
 import Login from "~/pages/LoginPage.vue";
+import authGuard from "./guards/auth.guard";
 
 export const routes = [
   {
@@ -35,4 +36,5 @@ const router = createRouter({
   routes: routes,
 });
 
+router.beforeEach(authGuard);
 export default router;

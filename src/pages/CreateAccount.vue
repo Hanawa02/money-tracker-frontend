@@ -43,7 +43,7 @@ import { ref } from "vue";
 import { useMainStore } from "~/stores/main.store";
 import axios from "axios";
 import { useAxios } from "@vueuse/integrations/useAxios";
-import routePaths from "~/routes/paths";
+import routePaths from "~/router/routes";
 import { useRouter } from "vue-router";
 
 import TextInput from "~/components/TextInput.vue";

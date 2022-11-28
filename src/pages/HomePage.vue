@@ -93,7 +93,7 @@ import { computed } from "vue";
 import { useMainStore } from "~/stores/main.store";
 
 import { useRouter } from "vue-router";
-import routePaths from "~/routes/paths";
+import routePaths from "~/router/routes";
 
 import AccountSearchSelector from "~/components/AccountSearchSelector.vue";
 import SnapshotCard from "~/components/SnapshotCard.vue";

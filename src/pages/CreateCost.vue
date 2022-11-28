@@ -105,7 +105,7 @@ import { useAxios } from "@vueuse/integrations/useAxios";
 import Account from "~/interfaces/account";
 import AccountSelector from "~/components/AccountSelector.vue";
 import { useDateFormat } from "@vueuse/core";
-import routePaths from "~/routes/paths";
+import routePaths from "~/router/routes";
 import { useRouter } from "vue-router";
 
 const mainStore = useMainStore();

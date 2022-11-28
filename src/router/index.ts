@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import paths from "~/routes/paths";
+import paths from "~/router/routes";
 
 import CreateAccount from "~/pages/CreateAccount.vue";
 import CreateCost from "~/pages/CreateCost.vue";

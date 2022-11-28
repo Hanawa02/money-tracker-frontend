@@ -65,7 +65,7 @@ import { useAxios } from "@vueuse/integrations/useAxios";
 import { useDateFormat } from "@vueuse/core";
 
 import { useMainStore } from "~/stores/main.store";
-import routePaths from "~/routes/paths";
+import routePaths from "~/router/routes";
 
 import Account from "~/interfaces/account";
 

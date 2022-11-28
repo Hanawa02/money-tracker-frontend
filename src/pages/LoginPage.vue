@@ -19,7 +19,7 @@ import { onBeforeMount } from "vue";
 import { useAuthStore } from "~/stores/auth.store";
 
 import { useRouter } from "vue-router";
-import routePaths from "~/routes/paths";
+import routePaths from "~/router/routes";
 
 import MButton from "~/components/MButton.vue";
 
@@ -33,7 +33,6 @@ onBeforeMount(() => {
 });
 
 function authenticateWithDiscord() {
-  window.location.href = `${import.meta.env.VITE_API_URL}/auth/discord`;
-  // authStore.authenticateWithDiscord();
+  authStore.authenticateWithDiscord();
 }
 </script>

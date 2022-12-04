@@ -102,17 +102,19 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { useMainStore } from "~/stores/main.store";
 import axios from "axios";
+import { ref } from "vue";
+import { useMainStore } from "~/stores/main.store";
 import { useAxios } from "@vueuse/integrations/useAxios";
-import Account from "~/interfaces/account";
-import AccountSelector from "~/components/AccountSelector.vue";
 import { useDateFormat } from "@vueuse/core";
-import routePaths from "~/router/routes";
 import { useRouter } from "vue-router";
 
+import Account from "~/interfaces/account";
+import routePaths from "~/router/routes";
+
+import AccountSelector from "~/components/AccountSelector.vue";
 import DateInput from "~/components/DateInput.vue";
+import TextInput from "~/components/TextInput.vue";
 import NumberInput from "~/components/NumberInput.vue";
 import MButton from "~/components/MButton.vue";
 
@@ -120,8 +122,8 @@ const mainStore = useMainStore();
 
 mainStore.loadData();
 
-const payer = ref<Account | undefined>(undefined);
 const eventDate = ref<string>(useDateFormat(new Date(), "YYYY-MM-DD").value);
+const payer = ref<Account | undefined>(mainStore.selectedAccount);
 const description = ref<string>("");
 const amount = ref<number>(0);
 const tags = ref<string>("");

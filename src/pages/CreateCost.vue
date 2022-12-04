@@ -1,5 +1,8 @@
 <template>
   <div class="p-4 max-w-md mx-auto">
+    <h1 class="text-3xl text-center mb-8 font-bold text-dark-primary">
+      {{ $t("pages.createPayment.header") }}
+    </h1>
     <account-selector
       label="Payer"
       @change="updatePayer"

@@ -59,17 +59,9 @@ import Account from "~/interfaces/account";
 
 const mainStore = useMainStore();
 
-const selectedAccount = computed(() => mainStore.selectedAccount);
-
 function updateSelectedAccount(accountId: string) {
-  mainStore.selectedAccount = mainStore.accounts.find(
-    (item) => item.id === accountId
-  );
+  mainStore.selectAccount(accountId);
 }
-
-const snapshots = computed(() =>
-  mainStore.filteredSnapshots(selectedAccount.value)
-);
 
 const searchInput = ref("");
 const allAccounts = computed<Account[]>((): Account[] => mainStore.accounts);

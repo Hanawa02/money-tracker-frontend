@@ -5,6 +5,7 @@
       class="
         w-full
         border-b border-light-gray
+        bg-white
         sticky
         top-0
         flex

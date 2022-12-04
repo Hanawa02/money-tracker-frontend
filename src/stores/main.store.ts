@@ -3,10 +3,12 @@ import Account from "~/interfaces/account";
 import Snapshot from "./../interfaces/snapshot";
 import axios from "axios";
 
+import { useStorage } from "@vueuse/core";
+
 interface MainState {
   accounts: Account[];
   snapshots: Snapshot[];
-  selectedAccount?: Account;
+  selectedAccountId?: RemovableRef<string>;
   costs: [];
   payments: [];
   tags: string[];
@@ -17,7 +19,7 @@ export const useMainStore = defineStore("Main", {
     return {
       accounts: [],
       snapshots: [],
-      selectedAccount: undefined,
+      selectedAccountId: useStorage("selectedAccountId", ""),
       costs: [],
       payments: [],
       tags: [],
@@ -67,12 +69,14 @@ export const useMainStore = defineStore("Main", {
       this.payments = payments;
     },
     async selectAccount(accountId: string) {
-      this.selectedAccount = this.accounts.find(
-        (item) => item.id === accountId
+      this.selectedAccountId = accountId;
       );
     },
   },
   getters: {
+    selectedAccount(): Account | undefined {
+      return this.accounts.find((item) => item.id === this.selectedAccountId);
+    },
     filteredSnapshots(state) {
       return (selectedAccount: Account | undefined) => {
         if (!selectedAccount) {

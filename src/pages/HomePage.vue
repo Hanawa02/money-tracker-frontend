@@ -10,25 +10,6 @@
       <account-search-selector />
     </template>
 
-    <h1
-      v-if="selectedAccount"
-      class="
-        flex
-        items-center
-        justify-end
-        font-medium
-        text-2xl
-        w-full
-        mb-4
-        pb-2
-        border-b border-light-gray
-      "
-    >
-      <span class="text-primary pr-2">{{ selectedAccount.name }}</span>
-      <div class="p-1 rounded-full bg-lightest-gray">
-        <m-icon icon="person" class="flex-shrink-0 w-6 h-6 text-mid-gray" />
-      </div>
-    </h1>
     <div
       v-if="selectedAccount"
       class="flex-col bg-lightest-gray rounded-md p-4"
@@ -49,33 +30,32 @@
     </div>
     <div class="fixed bottom-0 left-0 w-full">
       <div class="grid grid-cols-2 gap-4 py-4 px-4 w-full max-w-md mx-auto">
-        <m-button
-          v-if="selectedAccount"
-          class="border border-mid-primary text-mid-primary mx-auto w-full"
-          @click="goToCreatePaymentPage"
-        >
-          {{ $t("pages.home.newPayment") }}
-        </m-button>
-        <m-button
-          v-if="selectedAccount"
-          class="
-            border border-dark-primary
-            bg-dark-primary
-            text-white
-            mx-auto
-            w-full
-          "
-          @click="goToCreateCostPage"
-        >
-          {{ $t("pages.home.newCost") }}
-        </m-button>
-        <m-button
-          v-if="selectedAccount"
-          class="border border-mid-gray text-mid-gray mx-auto w-full"
-          @click="clearSelectedAccount"
-        >
-          {{ $t("pages.home.changeAccount") }}
-        </m-button>
+        <template v-if="selectedAccount">
+          <m-button
+            class="border border-mid-primary text-mid-primary mx-auto w-full"
+            @click="goToCreatePaymentPage"
+          >
+            {{ $t("pages.home.newPayment") }}
+          </m-button>
+          <m-button
+            class="
+              border border-dark-primary
+              bg-dark-primary
+              text-white
+              mx-auto
+              w-full
+            "
+            @click="goToCreateCostPage"
+          >
+            {{ $t("pages.home.newCost") }}
+          </m-button>
+          <m-button
+            class="border border-mid-gray text-mid-gray mx-auto w-full"
+            @click="clearSelectedAccount"
+          >
+            {{ $t("pages.home.changeAccount") }}
+          </m-button>
+        </template>
         <m-button
           class="bg-dark-gray text-white mx-auto w-full"
           :class="{ 'col-span-2': !selectedAccount }"
@@ -98,7 +78,6 @@ import routePaths from "~/router/routes";
 import AccountSearchSelector from "~/components/AccountSearchSelector.vue";
 import SnapshotCard from "~/components/SnapshotCard.vue";
 import MButton from "~/components/MButton.vue";
-import MIcon from "~/components/icons/MIcon.vue";
 
 const mainStore = useMainStore();
 

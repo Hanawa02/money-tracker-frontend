@@ -14,16 +14,19 @@
       {{ snapshot.lender_account.name }}
     </label>
     <div :class="`${snapshot.amount < 0 ? 'text-red' : 'text-mid-primary'}`">
-      {{ snapshot.amount }}€
+      {{ amountFormatted }}€
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import Snapshot from "~/interfaces/snapshot";
 
 interface IProps {
   snapshot: Snapshot;
 }
-defineProps<IProps>();
+const props = defineProps<IProps>();
+
+const amountFormatted = computed(() => props.snapshot.amount.toFixed(2));
 </script>

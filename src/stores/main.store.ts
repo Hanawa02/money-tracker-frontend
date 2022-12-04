@@ -9,6 +9,7 @@ interface MainState {
   selectedAccount?: Account;
   costs: [];
   payments: [];
+  tags: string[];
 }
 
 export const useMainStore = defineStore("Main", {
@@ -19,6 +20,7 @@ export const useMainStore = defineStore("Main", {
       selectedAccount: undefined,
       costs: [],
       payments: [],
+      tags: [],
     };
   },
   actions: {
@@ -39,6 +41,17 @@ export const useMainStore = defineStore("Main", {
     async loadPayments() {
       const result = await axios.get(`${import.meta.env.VITE_API_URL}/payment`);
       return result.data;
+    },
+    async loadTags() {
+      if (this.selectedAccount) {
+        const result = await axios.get(
+          `${import.meta.env.VITE_API_URL}/account/${
+            this.selectedAccount.id
+          }/tags`
+        );
+
+        this.tags = result.data;
+      }
     },
     async loadData() {
       const [accounts, snapshots, costs, payments] = await Promise.all([

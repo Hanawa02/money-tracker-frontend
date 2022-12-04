@@ -16,14 +16,6 @@
       class="mb-4"
     ></account-selector>
     <div class="flex mb-4">
-      <label class="pr-2">Description:</label>
-      <input
-        type="text"
-        v-model="description"
-        class="border-b w-full text-center"
-      />
-    </div>
-    <div class="flex mb-4">
       <label class="pr-2">Amount:</label>
       <input
         type="number"
@@ -31,6 +23,13 @@
         class="border-b w-full text-center"
       />
     </div>
+    <text-input
+      v-model="description"
+      id="event-description"
+      :label="$t('pages.createPayment.descriptionInput.label')"
+      :placeholder="$t('pages.createPayment.descriptionInput.placeholder')"
+      class="mb-4"
+    />
     <div class="flex mb-8">
       <label class="pr-2">Tags (separated by comma):</label>
       <input type="text" v-model="tags" class="border-b w-full text-center" />
@@ -110,14 +109,15 @@ import routePaths from "~/router/routes";
 import { useRouter } from "vue-router";
 
 import DateInput from "~/components/DateInput.vue";
+import NumberInput from "~/components/NumberInput.vue";
 const mainStore = useMainStore();
 
 mainStore.loadData();
 
 const payer = ref<Account | undefined>(undefined);
-const amount = ref<number>(0);
 const eventDate = ref<string>(useDateFormat(new Date(), "YYYY-MM-DD").value);
 const description = ref<string>("");
+const amount = ref<number>(0);
 const tags = ref<string>("");
 
 const debtors = ref<{ accountId: string; percentage: number }[]>([]);

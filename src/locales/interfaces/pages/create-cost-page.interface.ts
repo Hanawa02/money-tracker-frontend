@@ -11,4 +11,10 @@ export default interface CreateCostPage {
   };
   addCostButton: string;
   cancelButton: string;
+  tagInput: {
+    label: string;
+  };
+  percentageInput: {
+    label: string;
+  };
 }

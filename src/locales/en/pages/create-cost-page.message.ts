@@ -6,7 +6,7 @@ const createCost: CreateCostPage = {
   addCostButton: "Add Cost",
   cancelButton: "Cancel",
   amountInput: {
-    label: "Amount",
+    label: "Amount (€)",
   },
   dateInput: {
     label: "Date",
@@ -14,6 +14,12 @@ const createCost: CreateCostPage = {
   descriptionInput: {
     label: "Description",
     placeholder: "Identify your cost",
+  },
+  tagInput: {
+    label: "Tags",
+  },
+  percentageInput: {
+    label: "Percentage (%)",
   },
 };
 

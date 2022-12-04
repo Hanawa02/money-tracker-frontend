@@ -3,12 +3,14 @@ import { defineStore } from "pinia";
 
 interface AuthState {
   isAuthenticated: boolean;
+  axiosInstance: any;
 }
 
 export const useAuthStore = defineStore("Auth", {
   state: (): AuthState => {
     return {
       isAuthenticated: false,
+      axiosInstance: null,
     };
   },
   actions: {
@@ -36,6 +38,14 @@ export const useAuthStore = defineStore("Auth", {
       // append access token to all axios calls
       axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 
+      this.axiosInstance = axios.create({
+        baseURL: import.meta.env.VITE_API_URL,
+        headers: {
+          common: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      });
       sessionStorage.setItem("accessToken", accessToken.toString());
       this.setIsAuthenticated(true);
     },

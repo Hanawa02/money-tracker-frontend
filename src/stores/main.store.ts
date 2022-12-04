@@ -1,7 +1,12 @@
+import axios, { AxiosResponse } from "axios";
+import { RemovableRef, useDateFormat } from "@vueuse/core";
+import { useAxios, StrictUseAxiosReturn } from "@vueuse/integrations/useAxios";
 import { defineStore } from "pinia";
+import { useAuthStore } from "~/stores/auth.store";
+
 import Account from "~/interfaces/account";
-import Snapshot from "./../interfaces/snapshot";
-import axios from "axios";
+import Snapshot from "~/interfaces/snapshot";
+import Debtor from "~/interfaces/debtor";
 
 import { useStorage } from "@vueuse/core";
 
@@ -70,7 +75,41 @@ export const useMainStore = defineStore("Main", {
     },
     async selectAccount(accountId: string) {
       this.selectedAccountId = accountId;
+    },
+    async addCost(payload: {
+      payerId: string;
+      description: string;
+      amount: number;
+      eventDate: Date;
+      debtors: Debtor[];
+      tags: string[];
+    }): Promise<StrictUseAxiosReturn<any, AxiosResponse<any>, any>> {
+      const { payerId, description, amount, eventDate, debtors, tags } =
+        payload;
+
+      const requestPayload = {
+        method: "POST",
+        data: {
+          debtors: debtors.map((d) => ({
+            account_id: d.accountId,
+            percentage: d.percentage,
+          })),
+          amount: amount,
+          description: description,
+          tags: tags,
+          event_date: useDateFormat(eventDate, "YYYY-MM-DD").value,
+        },
+      };
+
+      const authStore = useAuthStore();
+
+      const result = await useAxios(
+        `account/${payerId}/cost`,
+        requestPayload,
+        authStore.axiosInstance
       );
+
+      return result;
     },
   },
   getters: {

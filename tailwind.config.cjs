@@ -7,6 +7,7 @@ module.exports = {
   theme: {
     colors: {
       "transparent": "transparent",
+      "inherit": "inherit",
       "white": "#ffffff",
       "black": "#000000",
       "white-gray": `hsl(${GRAY_BASE_HS}, 98%)`,

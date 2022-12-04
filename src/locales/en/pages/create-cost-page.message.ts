@@ -21,6 +21,10 @@ const createCost: CreateCostPage = {
   percentageInput: {
     label: "Percentage (%)",
   },
+  debtors: {
+    header: "Debtors",
+    addAnotherDebtorButton: "Add another Debtor",
+  },
 };
 
 export default createCost;

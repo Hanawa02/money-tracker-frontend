@@ -17,4 +17,8 @@ export default interface CreateCostPage {
   percentageInput: {
     label: string;
   };
+  debtors: {
+    header: string;
+    addAnotherDebtorButton: string;
+  };
 }

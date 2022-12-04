@@ -23,16 +23,55 @@
       class="mb-4"
     />
     <number-input
-      v-model="amount"
       id="event-description"
+      v-model="amount"
       :label="$t('pages.createCost.amountInput.label')"
+      :step="0.01"
+      :min="0"
       class="mb-4"
     />
-    <tag-input label="Tags" id="tags" v-model="tags"></tag-input>
+    <tag-input
+      :label="$t('pages.createCost.tagInput.label')"
+      id="tags"
+      v-model="tags"
+    ></tag-input>
 
-    <div class="flex flex-col justify-center mb-8">
+    <div class="flex flex-col justify-center my-8 p-2 shadow-card rounded">
+      <h2 class="text-xl font-bold text-mid-primary mb-4">
+        {{ $t("pages.createCost.debtors.header") }}
+      </h2>
+
+      <div
+        v-for="debtor of debtors"
+        :key="debtor.accountId"
+        class="mb-6 grid grid-cols-2 gap-2"
+      >
+        <account-selector
+          label="Debtor"
+          @change="(newValue) => (debtor.accountId = newValue)"
+          :selectedAccountId="debtor.accountId"
+          :hiddenAccountIds="getFilteredAccountIds(debtor.accountId)"
+          class="col-span-2"
+        ></account-selector>
+
+        <number-input
+          v-model="debtor.percentage"
+          :id="`percentage-input-${debtor.accountId}`"
+          :label="$t('pages.createCost.percentageInput.label')"
+          :min="0"
+          :max="100"
+        />
+
+        <number-input
+          v-model="debtor.amount"
+          :id="`amount-input-${debtor.accountId}`"
+          :disabled="true"
+          :label="$t('pages.createCost.amountInput.label')"
+          :step="0.01"
+        />
+      </div>
       <button
-        @click="addDebtor"
+        @click="addDebtor('')"
         class="
           bg-gray
           text-white
@@ -46,29 +85,8 @@
           mb-4
         "
       >
-        Add another Debtor
+        {{ $t("pages.createCost.debtors.addAnotherDebtorButton") }}
       </button>
-      <div
-        v-for="debtor of debtors"
-        :key="debtor.accountId"
-        class="shadow-card p-2 rounded mb-4"
-      >
-        <account-selector
-          label="Debtor"
-          @change="(newValue) => (debtor.accountId = newValue)"
-          :selectedAccountId="debtor.accountId"
-        ></account-selector>
-
-        <div class="flex mb-4">
-          <label class="pr-2">Percentage:</label>
-          <input
-            type="number"
-            max="100"
-            v-model="debtor.percentage"
-            class="border-b"
-          />
-        </div>
-      </div>
     </div>
     <div
       v-if="errorMessage"
@@ -99,14 +117,13 @@
 </template>
 
 <script setup lang="ts">
-import axios from "axios";
-import { ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useMainStore } from "~/stores/main.store";
-import { useAxios } from "@vueuse/integrations/useAxios";
 import { useDateFormat } from "@vueuse/core";
 import { useRouter } from "vue-router";
 
 import Account from "~/interfaces/account";
+import Debtor from "~/interfaces/debtor";
 import routePaths from "~/router/routes";
 
 import AccountSelector from "~/components/AccountSelector.vue";
@@ -117,7 +134,6 @@ import TagInput from "~/components/TagInput.vue";
 import TextInput from "~/components/TextInput.vue";
 
 const mainStore = useMainStore();
-
 mainStore.loadData();
 
 const eventDate = ref<string>(useDateFormat(new Date(), "YYYY-MM-DD").value);
@@ -126,26 +142,45 @@ const description = ref<string>("");
 const amount = ref<number>(0);
 const tags = ref<string[]>([]);
 
-const debtors = ref<{ accountId: string; percentage: number }[]>([]);
-
-const instance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
-});
+const debtors = ref<Debtor[]>([]);
 
 function updatePayer(id: string) {
   payer.value = mainStore.getAccountById(id);
+  addDebtor(id);
+}
+
+function addDebtor(accountId: string = "") {
+  const numberOfDebtors = debtors.value.length + 1;
+  const percentagePerDebtor = Math.floor(100 / numberOfDebtors);
+  const lastDebtorPercentage =
+    percentagePerDebtor + 100 - percentagePerDebtor * numberOfDebtors;
+
+  debtors.value = debtors.value.map((debtor) => {
+    return {
+      ...debtor,
+      percentage: percentagePerDebtor,
+      amount: (percentagePerDebtor / 100) * amount.value,
+    };
+  });
+
   debtors.value.push({
-    accountId: payer.value?.id || "",
-    percentage: 0,
+    accountId: accountId,
+    percentage: lastDebtorPercentage,
+    amount: (lastDebtorPercentage / 100) * amount.value,
   });
 }
 
-function addDebtor() {
-  debtors.value.push({
-    accountId: "",
-    percentage: 0,
+onMounted(() => {
+  addDebtor(mainStore.selectedAccount?.id);
+});
+
+watch(amount, (newValue: number) => {
+  debtors.value = debtors.value.map((debtor) => {
+    const newAmount = newValue * (debtor.percentage / 100);
+
+    return { ...debtor, amount: newAmount };
   });
-}
+});
 
 const router = useRouter();
 
@@ -160,25 +195,24 @@ function goToHomePage() {
 const errorMessage = ref("");
 
 async function addCost() {
-  const payload = {
-    method: "POST",
-    data: {
-      debtors: debtors.value.map((d) => ({
-        account_id: d.accountId,
-        percentage: d.percentage,
-      })),
-      amount: amount.value,
-      description: description.value,
-      tags: tags.value,
-      event_date: eventDate.value,
-    },
-  };
+  if (
+    !payer.value?.id ||
+    debtors.value?.length <= 0 ||
+    description.value === "" ||
+    amount.value === 0
+  ) {
+    errorMessage.value = "Some data is missing!";
+    return;
+  }
 
-  const { data, error } = await useAxios(
-    `account/${payer.value?.id}/cost`,
-    payload,
-    instance
-  );
+  const { data, error } = await mainStore.addCost({
+    payerId: payer.value?.id,
+    debtors: debtors.value,
+    description: description.value,
+    amount: amount.value,
+    eventDate: new Date(eventDate.value),
+    tags: tags.value,
+  });
 
   if (data.value && !error.value) {
     mainStore.loadData();
@@ -190,5 +224,11 @@ async function addCost() {
     errorMessage.value =
       error.value?.response?.data.error || error.value?.response?.data || "";
   }
+}
+
+function getFilteredAccountIds(selectedAccountId: string): string[] {
+  return debtors.value
+    .map((item) => item.accountId)
+    .filter((item) => item !== selectedAccountId);
 }
 </script>

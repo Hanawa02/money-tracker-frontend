@@ -1,14 +1,22 @@
 <template>
   <div class="p-4 min-h-screen h-full flex flex-col justify-center">
-    <h1 class="text-center mb-4 font-medium text-primary text-2xl w-full">
+    <h1 class="text-center mb-12 font-medium text-primary text-4xl w-full">
       {{ $t("pages.login.introduction") }}
     </h1>
-    <h2 class="text-darkest-primary text-center mb-4"></h2>
 
     <m-button
-      class="border border-mid-gray text-mid-gray mx-auto w-full"
+      class="
+        bg-[#7289da]
+        text-white
+        mx-auto
+        w-full
+        flex
+        items-center
+        justify-center
+      "
       @click="authenticateWithDiscord"
     >
+      <m-icon icon="discord" class="w-6 h-6 mr-2"></m-icon>
       {{ $t("pages.login.loginButtonDiscord") }}
     </m-button>
   </div>
@@ -22,6 +30,7 @@ import { useRouter } from "vue-router";
 import routePaths from "~/router/routes";
 
 import MButton from "~/components/MButton.vue";
+import MIcon from "~/components/icons/MIcon.vue";
 
 const authStore = useAuthStore();
 const router = useRouter();

@@ -3,20 +3,18 @@
     <h1 class="text-3xl text-center mb-8 font-bold text-dark-primary">
       {{ $t("pages.createPayment.header") }}
     </h1>
+    <date-input
+      v-model="eventDate"
+      :label="$t('pages.createPayment.dateInput.label')"
+      id="event-date"
+      class="mb-4"
+    ></date-input>
     <account-selector
       label="Payer"
       @change="updatePayer"
       :selectedAccountId="payer?.id"
       class="mb-4"
     ></account-selector>
-    <div class="flex mb-4">
-      <label class="pr-2">Date:</label>
-      <input
-        type="date"
-        v-model="eventDate"
-        class="border-b w-full text-center"
-      />
-    </div>
     <div class="flex mb-4">
       <label class="pr-2">Description:</label>
       <input
@@ -111,15 +109,16 @@ import { useDateFormat } from "@vueuse/core";
 import routePaths from "~/router/routes";
 import { useRouter } from "vue-router";
 
+import DateInput from "~/components/DateInput.vue";
 const mainStore = useMainStore();
 
 mainStore.loadData();
 
 const payer = ref<Account | undefined>(undefined);
 const amount = ref<number>(0);
+const eventDate = ref<string>(useDateFormat(new Date(), "YYYY-MM-DD").value);
 const description = ref<string>("");
 const tags = ref<string>("");
-const eventDate = ref<Date>(new Date());
 
 const debtors = ref<{ accountId: string; percentage: number }[]>([]);
 
@@ -160,7 +159,7 @@ async function addCost() {
       amount: amount.value,
       description: description.value,
       tags: tags.value.split(",").map((item) => item.trim()),
-      event_date: useDateFormat(eventDate, "YYYY-MM-DD").value,
+      event_date: eventDate.value,
     },
   };
 

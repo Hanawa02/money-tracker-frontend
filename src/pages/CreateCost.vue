@@ -1,11 +1,11 @@
 <template>
   <div class="p-4 max-w-md mx-auto">
     <h1 class="text-3xl text-center mb-8 font-bold text-dark-primary">
-      {{ $t("pages.createPayment.header") }}
+      {{ $t("pages.createCost.header") }}
     </h1>
     <date-input
       v-model="eventDate"
-      :label="$t('pages.createPayment.dateInput.label')"
+      :label="$t('pages.createCost.dateInput.label')"
       id="event-date"
       class="mb-4"
     ></date-input>
@@ -18,14 +18,14 @@
     <text-input
       v-model="description"
       id="event-description"
-      :label="$t('pages.createPayment.descriptionInput.label')"
-      :placeholder="$t('pages.createPayment.descriptionInput.placeholder')"
+      :label="$t('pages.createCost.descriptionInput.label')"
+      :placeholder="$t('pages.createCost.descriptionInput.placeholder')"
       class="mb-4"
     />
     <number-input
       v-model="amount"
       id="event-description"
-      :label="$t('pages.createPayment.amountInput.label')"
+      :label="$t('pages.createCost.amountInput.label')"
       class="mb-4"
     />
     <div class="flex mb-8">
@@ -92,10 +92,10 @@
         @click="goBack"
         class="bg-white border-mid-primary border text-mid-primary w-full"
       >
-        {{ $t("pages.createPayment.cancelButton") }}
+        {{ $t("pages.createCost.cancelButton") }}
       </m-button>
       <m-button @click="addCost" class="bg-mid-primary text-white w-full">
-        {{ $t("pages.createPayment.addPaymentButton") }}
+        {{ $t("pages.createCost.addCostButton") }}
       </m-button>
     </div>
   </div>

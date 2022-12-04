@@ -88,12 +88,18 @@
     >
       {{ errorMessage }}
     </div>
-    <button
-      @click="addCost"
-      class="bg-red text-white px-4 py-3 rounded text-md font-medium w-full"
-    >
-      Add Cost
-    </button>
+
+    <div class="flex gap-4 mt-8">
+      <m-button
+        @click="goBack"
+        class="bg-white border-mid-primary border text-mid-primary w-full"
+      >
+        {{ $t("pages.createPayment.cancelButton") }}
+      </m-button>
+      <m-button @click="addCost" class="bg-mid-primary text-white w-full">
+        {{ $t("pages.createPayment.addPaymentButton") }}
+      </m-button>
+    </div>
   </div>
 </template>
 
@@ -110,6 +116,8 @@ import { useRouter } from "vue-router";
 
 import DateInput from "~/components/DateInput.vue";
 import NumberInput from "~/components/NumberInput.vue";
+import MButton from "~/components/MButton.vue";
+
 const mainStore = useMainStore();
 
 mainStore.loadData();
@@ -142,6 +150,11 @@ function addDebtor() {
 }
 
 const router = useRouter();
+
+function goBack() {
+  router.back();
+}
+
 function goToHomePage() {
   router.push(routePaths.homePage.path);
 }

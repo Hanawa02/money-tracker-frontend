@@ -66,6 +66,11 @@ export const useMainStore = defineStore("Main", {
       this.costs = costs;
       this.payments = payments;
     },
+    async selectAccount(accountId: string) {
+      this.selectedAccount = this.accounts.find(
+        (item) => item.id === accountId
+      );
+    },
   },
   getters: {
     filteredSnapshots(state) {

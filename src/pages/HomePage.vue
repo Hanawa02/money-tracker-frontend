@@ -101,6 +101,6 @@ function goToCreateAccountPage() {
 }
 
 function clearSelectedAccount(): void {
-  mainStore.selectedAccount = undefined;
+  mainStore.selectAccount("");
 }
 </script>

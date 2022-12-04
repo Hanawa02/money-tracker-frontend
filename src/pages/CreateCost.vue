@@ -15,19 +15,17 @@
       :selectedAccountId="payer?.id"
       class="mb-4"
     ></account-selector>
-    <div class="flex mb-4">
-      <label class="pr-2">Amount:</label>
-      <input
-        type="number"
-        v-model="amount"
-        class="border-b w-full text-center"
-      />
-    </div>
     <text-input
       v-model="description"
       id="event-description"
       :label="$t('pages.createPayment.descriptionInput.label')"
       :placeholder="$t('pages.createPayment.descriptionInput.placeholder')"
+      class="mb-4"
+    />
+    <number-input
+      v-model="amount"
+      id="event-description"
+      :label="$t('pages.createPayment.amountInput.label')"
       class="mb-4"
     />
     <div class="flex mb-8">

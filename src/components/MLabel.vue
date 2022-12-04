@@ -1,9 +1,11 @@
 <template>
   <label
-    :class="`
-          text-xs mb-1 font-medium select-none
-          ${hasError ? 'text-mid-error' : 'text-mid-primary'}
-        `"
+    class="text-xs mb-1 font-medium select-none"
+    :class="{
+      'text-mid-error': hasError,
+      'cursor-not-allowed text-light-gray': disabled,
+      'text-mid-primary': !hasError && !disabled,
+    }"
     @click="handleClickEvent"
   >
     <slot />
@@ -13,6 +15,7 @@
 <script setup lang="ts">
 interface IProps {
   hasError?: boolean;
+  disabled?: boolean;
 }
 
 defineProps<IProps>();

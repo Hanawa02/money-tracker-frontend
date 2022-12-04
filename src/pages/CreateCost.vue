@@ -28,10 +28,7 @@
       :label="$t('pages.createCost.amountInput.label')"
       class="mb-4"
     />
-    <div class="flex mb-8">
-      <label class="pr-2">Tags (separated by comma):</label>
-      <input type="text" v-model="tags" class="border-b w-full text-center" />
-    </div>
+    <tag-input label="Tags" id="tags" v-model="tags"></tag-input>
 
     <div class="flex flex-col justify-center mb-8">
       <button
@@ -114,9 +111,10 @@ import routePaths from "~/router/routes";
 
 import AccountSelector from "~/components/AccountSelector.vue";
 import DateInput from "~/components/DateInput.vue";
-import TextInput from "~/components/TextInput.vue";
-import NumberInput from "~/components/NumberInput.vue";
 import MButton from "~/components/MButton.vue";
+import NumberInput from "~/components/NumberInput.vue";
+import TagInput from "~/components/TagInput.vue";
+import TextInput from "~/components/TextInput.vue";
 
 const mainStore = useMainStore();
 
@@ -126,7 +124,7 @@ const eventDate = ref<string>(useDateFormat(new Date(), "YYYY-MM-DD").value);
 const payer = ref<Account | undefined>(mainStore.selectedAccount);
 const description = ref<string>("");
 const amount = ref<number>(0);
-const tags = ref<string>("");
+const tags = ref<string[]>([]);
 
 const debtors = ref<{ accountId: string; percentage: number }[]>([]);
 
@@ -171,7 +169,7 @@ async function addCost() {
       })),
       amount: amount.value,
       description: description.value,
-      tags: tags.value.split(",").map((item) => item.trim()),
+      tags: tags.value,
       event_date: eventDate.value,
     },
   };

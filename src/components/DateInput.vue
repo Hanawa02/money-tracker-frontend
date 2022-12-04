@@ -26,6 +26,7 @@
           outline-none
           text-black-primary
           placeholder:text-light-gray
+          bg-inherit
         "
         :placeholder="placeholder"
         @input="updateValue"

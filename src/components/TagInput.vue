@@ -36,6 +36,7 @@
           text-black-primary
           placeholder:text-light-gray
           w-24
+          bg-inherit
         "
         :placeholder="placeholder"
         list="accountTags"

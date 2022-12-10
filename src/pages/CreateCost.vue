@@ -41,67 +41,20 @@
         {{ $t("pages.createCost.debtors.header") }}
       </h2>
 
-      <div
-        v-for="debtor of debtors"
-        :key="debtor.accountId"
-        class="mb-6 grid grid-cols-2 gap-2 relative"
-      >
-        <button
-          class="
-            absolute
-            -right-2
-            -top-2
-            p-1
-            bg-lightest-primary
-            rounded-full
-            shadow
-            z-10
-          "
-          @click="removeDebtor(debtor.accountId)"
-        >
-          <m-icon icon="close" class="w-6 h-6" />
-        </button>
-        <account-selector
-          label="Debtor"
-          @change="(newValue) => (debtor.accountId = newValue)"
-          :selectedAccountId="debtor.accountId"
-          :hiddenAccountIds="getFilteredAccountIds(debtor.accountId)"
-          class="col-span-2"
-        ></account-selector>
-
-        <number-input
-          v-model="debtor.percentage"
-          :id="`percentage-input-${debtor.accountId}`"
-          :label="$t('pages.createCost.percentageInput.label')"
-          :min="0"
-          :max="100"
+      <template v-for="(debtor, index) of debtors" :key="debtor.accountId">
+        <cost-debtor-data
+          class="mb-6"
+          v-model:debtor="debtors[index]"
+          :debtors="debtors"
+          @removeDebtor="removeDebtor(debtor.accountId)"
         />
-
-        <number-input
-          v-model="debtor.amount"
-          :id="`amount-input-${debtor.accountId}`"
-          :disabled="true"
-          :label="$t('pages.createCost.amountInput.label')"
-          :step="0.01"
-        />
-      </div>
-      <button
+      </template>
+      <m-button
         @click="addDebtor('')"
-        class="
-          bg-gray
-          text-white
-          px-4
-          py-3
-          rounded
-          text-md
-          font-medium
-          mx-auto
-          w-full
-          mb-4
-        "
+        class="border border-mid-primary text-mid-primary w-full mb-4"
       >
         {{ $t("pages.createCost.debtors.addAnotherDebtorButton") }}
-      </button>
+      </m-button>
     </div>
     <div
       v-if="errorMessage"
@@ -144,7 +97,7 @@ import routePaths from "~/router/routes";
 import AccountSelector from "~/components/AccountSelector.vue";
 import DateInput from "~/components/DateInput.vue";
 import MButton from "~/components/MButton.vue";
-import MIcon from "~/components/icons/MIcon.vue";
+import CostDebtorData from "~/components/CostDebtorData.vue";
 import NumberInput from "~/components/NumberInput.vue";
 import TagInput from "~/components/TagInput.vue";
 import TextInput from "~/components/TextInput.vue";

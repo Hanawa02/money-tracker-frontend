@@ -1,13 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
 import paths from "~/router/routes";
+import guards from "~/router/guards";
 
 import CreateAccount from "~/pages/CreateAccount.vue";
 import CreateCost from "~/pages/CreateCost.vue";
 import CreatePayment from "~/pages/CreatePayment.vue";
 import Home from "~/pages/HomePage.vue";
 import Login from "~/pages/LoginPage.vue";
-import authGuard from "./guards/auth.guard";
-import guards from "./guards";
 import Transactions from "~/pages/TransactionsPage.vue";
 
 export const routes = [

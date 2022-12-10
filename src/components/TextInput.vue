@@ -43,9 +43,17 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, useAttrs } from "vue";
 import MLabel from "~/components/MLabel.vue";
 import MIcon from "~/components/icons/MIcon.vue";
+
+const attrs: unknown = useAttrs();
+
+interface Attrs {
+  modelModifiers: {
+    lowerCase: boolean;
+  };
+}
 
 interface IProps {
   label?: string;
@@ -55,7 +63,9 @@ interface IProps {
   id: string;
   autofocus?: boolean;
 }
-const props = withDefaults(defineProps<IProps>(), { required: false });
+const props = withDefaults(defineProps<IProps>(), {
+  required: false,
+});
 
 const emit = defineEmits<{
   (_event: "change", _value: string): void;
@@ -76,7 +86,13 @@ function validateInput(newValue: string): void {
 
 function updateValue(event: Event): void {
   // TODO: does this part work, if yes which type is the correct one?
-  const value: string = (event as any)?.target?.value;
+  let value: string = (event as any)?.target?.value;
+
+  if ((attrs as Attrs)?.modelModifiers?.lowerCase) {
+    value = value.toLowerCase();
+  }
+
+  console.log(value);
   validateInput(value);
   emit("update:modelValue", value);
   emit("change", value);

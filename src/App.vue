@@ -18,10 +18,14 @@
         ><img src="/favicon.svg" class="w-6 h-6 flex-shrink-0 mr-2" /> Money
         Tracker</span
       >
-      <button class="flex items-center" v-if="selectedAccountName">
-        <span class="text-primary pr-2 font-medium">{{
-          selectedAccountName
-        }}</span>
+      <button
+        class="flex items-center"
+        v-if="selectedAccountName"
+        @click="clearSelectedAccount"
+      >
+        <span class="text-primary pr-2 font-medium">
+          {{ selectedAccountName }}
+        </span>
         <div class="p-1 rounded-full bg-lightest-gray">
           <m-icon icon="person" class="flex-shrink-0 w-4 h-4 text-mid-gray" />
         </div>
@@ -59,4 +63,9 @@ const mainStore = useMainStore();
 const selectedAccountName = computed(
   () => mainStore.selectedAccount?.name || ""
 );
+
+function clearSelectedAccount(): void {
+  mainStore.selectAccount("");
+  router.replace(routes.homePage.path);
+}
 </script>

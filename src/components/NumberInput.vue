@@ -20,7 +20,7 @@
         :value="modelValue"
         type="number"
         inputmode="numeric"
-        class="w-full outline-none placeholder:text-light-gray bg-inherit"
+        class="w-full outline-none placeholder:text-light-gray bg-transparent"
         :class="{
           'text-black-primary': !disabled,
           'text-gray': disabled,

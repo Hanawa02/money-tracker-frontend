@@ -18,7 +18,7 @@
     <input
       type="text"
       placeholder="search"
-      class="w-full absolute pl-10 pr-3 h-full left-0 bg-inherit"
+      class="w-full absolute pl-10 pr-3 h-full left-0 bg-transparent"
       v-model="searchInput"
     />
   </div>

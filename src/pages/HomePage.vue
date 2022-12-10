@@ -51,9 +51,9 @@
           </m-button>
           <m-button
             class="border border-mid-gray text-mid-gray mx-auto w-full"
-            @click="clearSelectedAccount"
+            @click="goToTransactionsPage"
           >
-            {{ $t("pages.home.changeAccount") }}
+            {{ $t("pages.home.seeTransactions") }}
           </m-button>
         </template>
         <m-button
@@ -100,7 +100,7 @@ function goToCreateAccountPage() {
   router.push(routePaths.createAccountPage.path);
 }
 
-function clearSelectedAccount(): void {
-  mainStore.selectAccount("");
+function goToTransactionsPage() {
+  router.push(routePaths.transactionsPage.path);
 }
 </script>

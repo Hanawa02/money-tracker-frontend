@@ -17,7 +17,7 @@
     data-value="tag"
   >
     {{ tag }}
-    <m-icon icon="close" class="w-4 h-4 ml-1 text-black" />
+    <m-icon v-if="!disabled" icon="close" class="w-4 h-4 ml-1 text-black" />
   </div>
 </template>
 
@@ -26,14 +26,19 @@ import MIcon from "~/components/icons/MIcon.vue";
 
 interface IProps {
   tag: string;
+  disabled?: boolean;
 }
-const props = defineProps<IProps>();
+const props = withDefaults(defineProps<IProps>(), { disabled: false });
 
 const emit = defineEmits<{
   (_event: "click", _value: string): void;
 }>();
 
 function handleClick(): void {
+  if (props.disabled) {
+    return;
+  }
+
   emit("click", props.tag);
 }
 </script>

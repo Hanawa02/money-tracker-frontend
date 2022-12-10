@@ -20,7 +20,7 @@
         name="account"
         :value="selectedAccountId"
         @change="updateSelectedAccount"
-        class="w-full bg-transparent"
+        class="w-full bg-transparent cursor-pointer outline-none"
         :class="{ 'text-gray': !selectedAccountId }"
       >
         <option value="" class="text-gray">

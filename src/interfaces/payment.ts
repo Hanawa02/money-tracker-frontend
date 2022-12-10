@@ -1,6 +1,5 @@
-import Account from "~/interfaces/account";
-
 export default interface Payment {
+  discriminator: "Payment";
   amount: number;
   description: string;
   event_date: string;

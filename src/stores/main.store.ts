@@ -72,7 +72,9 @@ export const useMainStore = defineStore("Main", {
       this.accounts = accounts;
       this.snapshots = snapshots;
       this.costs = costs;
-      this.payments = payments;
+      this.payments = payments.map((item: Payment) => {
+        return { ...item, discriminator: "Payment" };
+      });
     },
     async selectAccount(accountId: string) {
       this.selectedAccountId = accountId;

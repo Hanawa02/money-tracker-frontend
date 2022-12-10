@@ -8,6 +8,7 @@ import Account from "~/interfaces/account";
 import Snapshot from "~/interfaces/snapshot";
 import Debtor from "~/interfaces/debtor";
 import Payment from "~/interfaces/payment";
+import Cost from "~/interfaces/cost";
 
 import { useStorage } from "@vueuse/core";
 
@@ -15,7 +16,7 @@ interface MainState {
   accounts: Account[];
   snapshots: Snapshot[];
   selectedAccountId?: RemovableRef<string>;
-  costs: [];
+  costs: Cost[];
   payments: Payment[];
   tags: string[];
 }
@@ -71,7 +72,9 @@ export const useMainStore = defineStore("Main", {
 
       this.accounts = accounts;
       this.snapshots = snapshots;
-      this.costs = costs;
+      this.costs = costs.map((item: Cost) => {
+        return { ...item, discriminator: "Cost" };
+      });
       this.payments = payments.map((item: Payment) => {
         return { ...item, discriminator: "Payment" };
       });

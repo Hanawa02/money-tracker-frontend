@@ -12,21 +12,55 @@
       ></account-selector>
 
       <text-input
-        v-model="searchFilter"
+        v-model.lowerCase="searchFilter"
         id="search-filter"
         :label="$t('pages.transactions.searchFilter.label')"
         :placeholder="$t('pages.transactions.searchFilter.placeholder')"
       />
+
+      <div
+        class="flex flex-col col-span-2 pt-2 pb-3 px-4 rounded-lg shadow-card"
+      >
+        <m-label>
+          {{ $t("pages.transactions.transactionTypeFilter.label") }}
+        </m-label>
+
+        <div class="flex gap-4 mt-1">
+          <radio-tag
+            id="all-transactions"
+            v-model="transactionTypeFilter"
+            value="all"
+            :label="
+              $t('pages.transactions.transactionTypeFilter.optionLabels.all')
+            "
+          />
+          <radio-tag
+            id="cost-transactions"
+            v-model="transactionTypeFilter"
+            value="cost"
+            :label="
+              $t('pages.transactions.transactionTypeFilter.optionLabels.cost')
+            "
+          />
+          <radio-tag
+            id="payment-transactions"
+            v-model="transactionTypeFilter"
+            value="payment"
+            :label="
+              $t(
+                'pages.transactions.transactionTypeFilter.optionLabels.payment'
+              )
+            "
+          />
+        </div>
+      </div>
     </div>
 
     <div class="mb-4 gap-2 flex flex-col">
-      <payment-card
-        v-for="payment in filteredPayments"
-        :payment="payment"
-        :key="payment.id"
-        class="flex gap-4 shadow-card p-3 rounded"
-      >
-      </payment-card>
+      <template v-for="item in filteredItems" :key="item.id">
+        <payment-card v-if="item.discriminator === 'Payment'" :payment="item" />
+        <cost-card v-if="item.discriminator === 'Cost'" :cost="item" />
+      </template>
     </div>
 
     <div class="flex gap-4 mt-8">
@@ -47,36 +81,77 @@ import { useRouter } from "vue-router";
 import { useMainStore } from "~/stores/main.store";
 
 import Payment from "~/interfaces/payment";
+import Cost from "~/interfaces/cost";
 
 import AccountSelector from "~/components/AccountSelector.vue";
 import TextInput from "~/components/TextInput.vue";
 import MButton from "~/components/MButton.vue";
 import PaymentCard from "~/components/PaymentCard.vue";
+import CostCard from "~/components/CostCard.vue";
+import MLabel from "~/components/MLabel.vue";
+import RadioTag from "~/components/RadioTag.vue";
 
 const mainStore = useMainStore();
 mainStore.loadData();
 
 const searchFilter = ref<string>("");
+const transactionTypeFilter = ref<"all" | "cost" | "payment">("all");
 
-const filteredCosts = computed(() => {
-  return mainStore.costs;
+const filteredItems = computed(() => {
+  let items: (Cost | Payment)[] = [];
+  if (["all", "cost"].includes(transactionTypeFilter.value)) {
+    items = [...items, ...filteredCosts.value];
+  }
+
+  if (["all", "payment"].includes(transactionTypeFilter.value)) {
+    items = [...items, ...filteredPayments.value];
+  }
+
+  return items.sort(sortByEventDate);
 });
 
-function filterPaymentBySearch(payment: Payment): boolean {
+function sortByEventDate(a: Payment | Cost, b: Payment | Cost) {
+  const dateA = new Date(a.event_date);
+  const dateB = new Date(b.event_date);
+
+  return dateB.getTime() - dateA.getTime();
+}
+
+/* Costs */
+
+const filteredCosts = computed<Cost[]>(() => {
+  return mainStore.costs.filter(filterCostBySearch);
+});
+
+function filterCostBySearch(cost: Cost): boolean {
   return (
     !searchFilter.value ||
-    payment.description.includes(searchFilter.value) ||
-    payment.amount.toFixed(2).toString().includes(searchFilter.value)
+    cost.description.toLowerCase().includes(searchFilter.value) ||
+    cost.amount.toFixed(2).toString().includes(searchFilter.value) ||
+    cost.tags.join(" ").toLowerCase().includes(searchFilter.value)
   );
 }
 
+/* Payments */
 const filteredPayments = computed<Payment[]>(() => {
   return mainStore.payments
     .filter(filterPaymentByAccountId)
     .filter(filterPaymentBySearch);
 });
 
+function filterPaymentBySearch(payment: Payment): boolean {
+  return (
+    !searchFilter.value ||
+    payment.description.toLowerCase().includes(searchFilter.value) ||
+    payment.amount.toFixed(2).toString().includes(searchFilter.value)
+  );
+}
+
 const accountIdFilter = ref<string>(mainStore.selectedAccount?.id || "");
+
+function updatedFilterByAccount(accountId: string) {
+  accountIdFilter.value = accountId;
+}
 
 function filterPaymentByAccountId(payment: Payment): boolean {
   return (
@@ -86,10 +161,7 @@ function filterPaymentByAccountId(payment: Payment): boolean {
   );
 }
 
-function updatedFilterByAccount(accountId: string) {
-  accountIdFilter.value = accountId;
-}
-
+/* Navigation */
 const router = useRouter();
 
 function goBack() {

@@ -8,6 +8,14 @@ const login: TransactionsPage = {
     label: "Search",
     placeholder: "Search by description or amount",
   },
+  transactionTypeFilter: {
+    label: "Filter by transaction type",
+    optionLabels: {
+      all: "All",
+      cost: "Only costs",
+      payment: "Only Payments",
+    },
+  },
   goBackButton: "Go back",
 };
 

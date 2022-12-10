@@ -6,5 +6,13 @@ export default interface TransactionsPage {
     label: string;
     placeholder: string;
   };
+  transactionTypeFilter: {
+    label: string;
+    optionLabels: {
+      all: string;
+      cost: string;
+      payment: string;
+    };
+  };
   goBackButton: string;
 }

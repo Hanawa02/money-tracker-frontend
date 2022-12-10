@@ -44,8 +44,23 @@
       <div
         v-for="debtor of debtors"
         :key="debtor.accountId"
-        class="mb-6 grid grid-cols-2 gap-2"
+        class="mb-6 grid grid-cols-2 gap-2 relative"
       >
+        <button
+          class="
+            absolute
+            -right-2
+            -top-2
+            p-1
+            bg-lightest-primary
+            rounded-full
+            shadow
+            z-10
+          "
+          @click="removeDebtor(debtor.accountId)"
+        >
+          <m-icon icon="close" class="w-6 h-6" />
+        </button>
         <account-selector
           label="Debtor"
           @change="(newValue) => (debtor.accountId = newValue)"
@@ -129,6 +144,7 @@ import routePaths from "~/router/routes";
 import AccountSelector from "~/components/AccountSelector.vue";
 import DateInput from "~/components/DateInput.vue";
 import MButton from "~/components/MButton.vue";
+import MIcon from "~/components/icons/MIcon.vue";
 import NumberInput from "~/components/NumberInput.vue";
 import TagInput from "~/components/TagInput.vue";
 import TextInput from "~/components/TextInput.vue";
@@ -168,6 +184,12 @@ function addDebtor(accountId: string = "") {
     percentage: lastDebtorPercentage,
     amount: (lastDebtorPercentage / 100) * amount.value,
   });
+}
+function removeDebtor(accountId: string) {
+  console.log(debtors, accountId);
+  debtors.value = debtors.value.filter(
+    (debtor) => debtor.accountId !== accountId
+  );
 }
 
 onMounted(() => {

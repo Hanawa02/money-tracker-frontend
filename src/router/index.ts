@@ -8,6 +8,7 @@ import Home from "~/pages/HomePage.vue";
 import Login from "~/pages/LoginPage.vue";
 import authGuard from "./guards/auth.guard";
 import guards from "./guards";
+import Transactions from "~/pages/TransactionsPage.vue";
 
 export const routes = [
   {
@@ -29,6 +30,10 @@ export const routes = [
   {
     ...paths.loginPage,
     component: Login,
+  },
+  {
+    ...paths.transactionsPage,
+    component: Transactions,
   },
 ];
 

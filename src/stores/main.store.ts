@@ -7,6 +7,7 @@ import { useAuthStore } from "~/stores/auth.store";
 import Account from "~/interfaces/account";
 import Snapshot from "~/interfaces/snapshot";
 import Debtor from "~/interfaces/debtor";
+import Payment from "~/interfaces/payment";
 
 import { useStorage } from "@vueuse/core";
 
@@ -15,7 +16,7 @@ interface MainState {
   snapshots: Snapshot[];
   selectedAccountId?: RemovableRef<string>;
   costs: [];
-  payments: [];
+  payments: Payment[];
   tags: string[];
 }
 

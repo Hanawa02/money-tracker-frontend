@@ -9,7 +9,7 @@ const home: HomePage = {
   newPayment: "New Payment",
   newCost: "New Cost",
   newAccount: "Create Account",
-  changeAccount: "Change Account",
+  seeTransactions: "See Transactions",
 };
 
 export default home;

@@ -28,10 +28,16 @@ const loginPage: RouteData = {
   name: "login",
 };
 
+const transactionsPage: RouteData = {
+  path: "/transactions",
+  name: "transactions",
+};
+
 export default {
   homePage,
   createCostPage,
   createPaymentPage,
   createAccountPage,
   loginPage,
+  transactionsPage,
 };

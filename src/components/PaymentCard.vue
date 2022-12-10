@@ -1,10 +1,10 @@
 <template>
   <details
     v-if="accountFrom && accountTo"
-    class="flexshadow-card p-3 rounded cursor-pointer"
+    class="flex shadow-card p-3 rounded cursor-pointer"
   >
     <summary class="flex gap-3">
-      <span class="flex-shrink-0 text-mid-gray">{{ eventDate }}</span>
+      <span class="flex-shrink-0 text-gray">{{ eventDate }}</span>
       <span
         class="w-full"
         :class="{ 'font-semibold': selectedAccountIsPaying }"

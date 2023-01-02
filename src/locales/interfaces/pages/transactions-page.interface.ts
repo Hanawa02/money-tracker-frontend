@@ -14,5 +14,8 @@ export default interface TransactionsPage {
       payment: string;
     };
   };
+  paymentCard: {
+    fullDescription: string;
+  };
   goBackButton: string;
 }

@@ -57,20 +57,19 @@
     </div>
 
     <div class="mb-4 gap-2 flex flex-col">
-      <template v-for="item in filteredItems" :key="item.id">
+      <template v-for="item of filteredItems" :key="item.id">
         <payment-card v-if="item.discriminator === 'Payment'" :payment="item" />
         <cost-card v-if="item.discriminator === 'Cost'" :cost="item" />
       </template>
     </div>
-
-    <div class="flex gap-4 mt-8">
-      <m-button
-        @click="goBack"
-        class="bg-white border-mid-primary border text-mid-primary w-full"
-      >
-        {{ $t("pages.transactions.goBackButton") }}
-      </m-button>
-    </div>
+  </div>
+  <div class="p-4 max-w-md mx-auto bg-white flex sticky w-full bottom-0 left-0">
+    <m-button
+      @click="goBack"
+      class="bg-white border-mid-primary border text-mid-primary w-full"
+    >
+      {{ $t("pages.transactions.goBackButton") }}
+    </m-button>
   </div>
 </template>
 

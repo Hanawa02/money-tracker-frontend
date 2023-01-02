@@ -1,24 +1,47 @@
 <template>
-  <div class="flex flex-col shadow-card p-3 rounded" v-if="accountPayer">
-    <div class="flex gap-3 mb-2">
-      <span class="flex-shrink-0 text-mid-gray">{{ eventDate }}</span>
-      <span class="w-full">{{ description }}</span>
+  <details class="flex flex-col shadow-card p-3 rounded" v-if="accountPayer">
+    <summary class="flex flex-col mb-2">
+      <div class="flex gap-2.5 items-center">
+        <span class="flex-shrink-0 text-mid-gray text-sm">{{ eventDate }}</span>
+        <span class="w-full truncate">{{ description }}</span>
 
-      <span class="flex-shrink-0 text-mid-gray">Payer:</span>
-      <span
-        class="w-full"
-        :class="{ 'font-semibold': selectedAccountIsPaying }"
-        >{{ accountPayer.name }}</span
-      >
-
-      <span class="flex-shrink-0 w-18 text-right font-semibold"
-        >{{ formattedAmount }}<small> €</small></span
-      >
+        <span class="flex-shrink-0 w-17 text-right font-semibold"
+          >{{ formattedAmount }}<small> €</small></span
+        >
+      </div>
+      <div v-if="cost.tags.length" class="flex flex-wrap mt-2 gap-2">
+        <m-tag
+          v-for="tag of cost.tags"
+          :key="tag"
+          :tag="tag"
+          :disabled="true"
+        />
+      </div>
+    </summary>
+    <div>
+      <hr class="my-3 border-lightest-gray" />
+      <div class="flex mb-4">
+        <span class="flex-shrink-0 mr-2 text-mid-gray">Payer:</span>
+        <span
+          class="flex-shrink-0 truncate"
+          :class="{ 'font-semibold': selectedAccountIsPaying }"
+          :title="accountPayer.name"
+          >{{ accountPayer.name }}</span
+        >
+      </div>
+      <cost-card-debtor
+        class="odd:bg-white-primary"
+        v-for="debtor of cost.debtors"
+        :key="debtor.id"
+        :cost="cost"
+        :debtor="debtor"
+      />
+      <details class="my-2">
+        <summary>see full description</summary>
+        <span class="w-full">{{ description }}</span>
+      </details>
     </div>
-    <div v-if="cost.tags.length" class="flex flex-wrap mt-2 gap-2">
-      <m-tag v-for="tag of cost.tags" :key="tag" :tag="tag" :disabled="true" />
-    </div>
-  </div>
+  </details>
 </template>
 
 <script setup lang="ts">
@@ -28,6 +51,7 @@ import { useMainStore } from "~/stores/main.store";
 
 import Cost from "~/interfaces/cost";
 import MTag from "~/components/MTag.vue";
+import CostCardDebtor from "~/components/CostCardDebtor.vue";
 
 interface IProps {
   cost: Cost;

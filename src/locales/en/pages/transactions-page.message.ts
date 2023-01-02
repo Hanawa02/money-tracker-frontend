@@ -1,6 +1,6 @@
 import TransactionsPage from "~/locales/interfaces/pages/transactions-page.interface";
 
-const login: TransactionsPage = {
+const transactionpage: TransactionsPage = {
   title: "Transactions - Money Tracker",
   header: "Transactions List",
   filterByAccount: "Filter by Account",
@@ -16,7 +16,11 @@ const login: TransactionsPage = {
       payment: "Only Payments",
     },
   },
+  paymentCard: {
+    fullDescription:
+      "<span class='underline'>{from}</span> paid to <span class='underline'>{to}</span>: {description}",
+  },
   goBackButton: "Go back",
 };
 
-export default login;
+export default transactionpage;

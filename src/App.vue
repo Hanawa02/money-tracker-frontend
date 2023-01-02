@@ -23,7 +23,7 @@
         v-if="selectedAccountName"
         @click="clearSelectedAccount"
       >
-        <span class="text-primary pr-2 font-medium">
+        <span class="text-primary pr-2 font-medium truncate">
           {{ selectedAccountName }}
         </span>
         <div class="p-1 rounded-full bg-lightest-gray">

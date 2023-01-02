@@ -41,12 +41,13 @@
         {{ $t("pages.createCost.debtors.header") }}
       </h2>
 
-      <template v-for="(debtor, index) of debtors" :key="debtor.accountId">
+      <template v-for="(debtor, index) of debtors" :key="debtor.account_id">
         <cost-debtor-data
           class="mb-6"
           v-model:debtor="debtors[index]"
           :debtors="debtors"
-          @removeDebtor="removeDebtor(debtor.accountId)"
+          :costAmount="amount"
+          @removeDebtor="removeDebtor(debtor.account_id)"
         />
       </template>
       <m-button
@@ -128,33 +129,22 @@ function addDebtor(accountId: string = "") {
     return {
       ...debtor,
       percentage: percentagePerDebtor,
-      amount: (percentagePerDebtor / 100) * amount.value,
     };
   });
 
   debtors.value.push({
-    accountId: accountId,
+    account_id: accountId,
     percentage: lastDebtorPercentage,
-    amount: (lastDebtorPercentage / 100) * amount.value,
   });
 }
 function removeDebtor(accountId: string) {
-  console.log(debtors, accountId);
   debtors.value = debtors.value.filter(
-    (debtor) => debtor.accountId !== accountId
+    (debtor) => debtor.account_id !== accountId
   );
 }
 
 onMounted(() => {
   addDebtor(mainStore.selectedAccount?.id);
-});
-
-watch(amount, (newValue: number) => {
-  debtors.value = debtors.value.map((debtor) => {
-    const newAmount = newValue * (debtor.percentage / 100);
-
-    return { ...debtor, amount: newAmount };
-  });
 });
 
 const router = useRouter();
@@ -199,11 +189,5 @@ async function addCost() {
     errorMessage.value =
       error.value?.response?.data.error || error.value?.response?.data || "";
   }
-}
-
-function getFilteredAccountIds(selectedAccountId: string): string[] {
-  return debtors.value
-    .map((item) => item.accountId)
-    .filter((item) => item !== selectedAccountId);
 }
 </script>

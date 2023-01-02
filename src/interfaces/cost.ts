@@ -1,3 +1,4 @@
+import Debtor from "~/interfaces/debtor";
 export default interface Cost {
   discriminator: "Cost";
   id: string;
@@ -5,5 +6,6 @@ export default interface Cost {
   description: string;
   event_date: string;
   amount: number;
-  tags: ["string"];
+  tags: string[];
+  debtors: Debtor[];
 }

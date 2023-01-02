@@ -97,7 +97,7 @@ export const useMainStore = defineStore("Main", {
         method: "POST",
         data: {
           debtors: debtors.map((d) => ({
-            account_id: d.accountId,
+            account_id: d.account_id,
             percentage: d.percentage,
           })),
           amount: amount,

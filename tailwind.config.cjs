@@ -45,6 +45,7 @@ module.exports = {
     },
     extend: {
       spacing: {
+        17: "4.25rem",
         icon: "1.34em",
       },
       minWidth: {

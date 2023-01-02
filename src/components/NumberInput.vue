@@ -23,8 +23,7 @@
         class="w-full outline-none placeholder:text-light-gray bg-transparent"
         :class="{
           'text-black-primary': !disabled,
-          'text-gray': disabled,
-          'cursor-not-allowed': disabled,
+          'text-gray cursor-not-allowed': disabled,
         }"
         :placeholder="placeholder"
         @input="updateValue"

@@ -3,21 +3,23 @@
     v-if="accountFrom && accountTo"
     class="flex shadow-card p-3 rounded cursor-pointer"
   >
-    <summary class="flex gap-3">
-      <span class="flex-shrink-0 text-gray">{{ eventDate }}</span>
+    <summary class="flex gap-2 items-center">
+      <span class="flex-shrink-0 text-gray text-sm">{{ eventDate }}</span>
       <span
-        class="w-full"
+        class="flex-grow truncate"
         :class="{ 'font-semibold': selectedAccountIsPaying }"
+        :title="accountFrom.name"
         >{{ accountFrom.name }}</span
       >
       <span class="flex-shrink-0 text-mid-gray">to:</span>
       <span
-        class="w-full"
+        class="flex-shrink-0 w-12 truncate"
         :class="{ 'font-semibold': selectedAccountIsPaidTo }"
+        :title="accountTo.name"
         >{{ accountTo.name }}</span
       >
       <span
-        class="flex-shrink-0 w-18 text-right font-semibold"
+        class="flex-shrink-0 w-17 text-right font-semibold"
         :class="{
           'text-mid-primary': selectedAccountIsPaidTo,
           'text-mid-red': selectedAccountIsPaying,
@@ -27,7 +29,16 @@
     </summary>
     <div>
       <hr class="my-3 border-lightest-gray" />
-      {{ description }}
+
+      <div
+        v-html="
+          $t('pages.transactions.paymentCard.fullDescription', {
+            to: accountTo.name,
+            from: accountFrom.name,
+            description,
+          })
+        "
+      />
     </div>
   </details>
 </template>

@@ -11,7 +11,7 @@
     data-type="input-field"
   >
     <div class="flex flex-col w-full">
-      <m-label :has-error="hasError" @click="focusInput">
+      <m-label :has-error="hasError" @click="focusInput" :disabled="disabled">
         {{ label }}
         <span v-if="required" class="ml-0.5 text-gray">*</span>
       </m-label>
@@ -20,21 +20,20 @@
         :id="id"
         ref="input"
         :value="modelValue"
+        :disabled="disabled"
         type="text"
-        class="
-          w-full
-          outline-none
-          text-black-primary
-          placeholder:text-light-gray
-          bg-transparent
-        "
+        class="w-full outline-none placeholder:text-light-gray bg-transparent"
+        :class="{
+          'text-black-primary': !disabled,
+          'text-gray cursor-not-allowed': disabled,
+        }"
         :placeholder="placeholder"
         @input="updateValue"
         @keyup.enter="handleEnterKey"
       />
     </div>
     <m-icon
-      v-show="modelValue"
+      v-show="modelValue && !disabled"
       icon="close"
       class="w-6 h-6 text-mid-gray mt-1 hover:text-primary cursor-pointer"
       @click="cleanValue"
@@ -62,6 +61,7 @@ interface IProps {
   required?: boolean;
   id: string;
   autofocus?: boolean;
+  disabled?: boolean;
 }
 const props = withDefaults(defineProps<IProps>(), {
   required: false,

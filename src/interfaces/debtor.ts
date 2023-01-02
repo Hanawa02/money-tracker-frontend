@@ -1,5 +1,5 @@
 export default interface Debtor {
-  accountId: string;
+  id?: string;
+  account_id: string;
   percentage: number;
-  amount: number;
 }

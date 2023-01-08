@@ -56,12 +56,18 @@ interface IProps {
 const mainStore = useMainStore();
 
 const props = withDefaults(defineProps<IProps>(), { required: false });
-const emit = defineEmits<{ (_event: "change", _accountId: string): void }>();
+const emit = defineEmits<{
+  (
+    _event: "change",
+    _accountId: string,
+    _oldAccountId: string | undefined
+  ): void;
+}>();
 
 function setSelectedAccount(accountId: string) {
   validateInput(accountId);
   if (accountId !== props.selectedAccountId) {
-    emit("change", accountId);
+    emit("change", accountId, props.selectedAccountId);
   }
 }
 

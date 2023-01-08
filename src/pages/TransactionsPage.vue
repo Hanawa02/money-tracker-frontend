@@ -7,7 +7,7 @@
     <div class="grid grid-cols-2 gap-4 mb-4">
       <account-selector
         :label="$t('pages.transactions.filterByAccount')"
-        @change="updatedFilterByAccount"
+        @change="updateFilterByAccount"
         :selectedAccountId="accountIdFilter"
       ></account-selector>
 
@@ -116,10 +116,18 @@ function sortByEventDate(a: Payment | Cost, b: Payment | Cost) {
   return dateB.getTime() - dateA.getTime();
 }
 
+const accountIdFilter = ref<string>(mainStore.selectedAccount?.id || "");
+
+function updateFilterByAccount(accountId: string) {
+  accountIdFilter.value = accountId;
+}
+
 /* Costs */
 
 const filteredCosts = computed<Cost[]>(() => {
-  return mainStore.costs.filter(filterCostBySearch);
+  return mainStore.costs
+    .filter(filterCostBySearch)
+    .filter(filterCostByAccountId);
 });
 
 function filterCostBySearch(cost: Cost): boolean {
@@ -128,6 +136,16 @@ function filterCostBySearch(cost: Cost): boolean {
     cost.description.toLowerCase().includes(searchFilter.value) ||
     cost.amount.toFixed(2).toString().includes(searchFilter.value) ||
     cost.tags.join(" ").toLowerCase().includes(searchFilter.value)
+  );
+}
+
+function filterCostByAccountId(cost: Cost): boolean {
+  return (
+    !accountIdFilter.value ||
+    cost.account_id === accountIdFilter.value ||
+    cost.debtors
+      .map((debtor) => debtor.account_id)
+      .includes(accountIdFilter.value)
   );
 }
 
@@ -144,12 +162,6 @@ function filterPaymentBySearch(payment: Payment): boolean {
     payment.description.toLowerCase().includes(searchFilter.value) ||
     payment.amount.toFixed(2).toString().includes(searchFilter.value)
   );
-}
-
-const accountIdFilter = ref<string>(mainStore.selectedAccount?.id || "");
-
-function updatedFilterByAccount(accountId: string) {
-  accountIdFilter.value = accountId;
 }
 
 function filterPaymentByAccountId(payment: Payment): boolean {

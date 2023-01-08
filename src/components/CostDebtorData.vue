@@ -23,18 +23,16 @@
       class="col-span-2"
     ></account-selector>
 
-    <number-input
-      v-model="debtor.percentage"
+    <text-input
+      :modelValue="debtorPercentage"
       :id="`percentage-input-${debtor.account_id}`"
       :label="$t('pages.createCost.percentageInput.label')"
-      :min="0"
-      :max="100"
+      :disabled="true"
     />
 
-    <text-input
-      :modelValue="debtorAmount"
+    <number-input
+      v-model="debtor.amount"
       :id="`amount-input-${debtor.account_id}`"
-      :disabled="true"
       :label="$t('pages.createCost.amountInput.label')"
       :step="0.01"
     />
@@ -80,7 +78,12 @@ function updateAccountId(newValue: string): void {
   emit("update:debtor", debtor);
 }
 
-const debtorAmount = computed(() => {
-  return (props.costAmount * (props.debtor.percentage / 100)).toFixed(2);
+const debtorPercentage = computed<string>(() => {
+  if (!props.costAmount) {
+    return "0";
+  }
+  return ((props.debtor.amount / props.costAmount) * 100)
+    .toFixed(2)
+    .replace(".00", "");
 });
 </script>

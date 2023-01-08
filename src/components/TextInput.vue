@@ -92,7 +92,6 @@ function updateValue(event: Event): void {
     value = value.toLowerCase();
   }
 
-  console.log(value);
   validateInput(value);
   emit("update:modelValue", value);
   emit("change", value);

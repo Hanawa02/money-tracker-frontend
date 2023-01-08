@@ -86,7 +86,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 import { useMainStore } from "~/stores/main.store";
 import { useDateFormat } from "@vueuse/core";
 import { useRouter } from "vue-router";
@@ -109,34 +109,62 @@ mainStore.loadData();
 const eventDate = ref<string>(useDateFormat(new Date(), "YYYY-MM-DD").value);
 const payer = ref<Account | undefined>(mainStore.selectedAccount);
 const description = ref<string>("");
-const amount = ref<number>(0);
+const amount = ref<number>(0.0);
 const tags = ref<string[]>([]);
 
 const debtors = ref<Debtor[]>([]);
 
-function updatePayer(id: string) {
+function updatePayer(id: string, oldAccountId: string | undefined) {
   payer.value = mainStore.getAccountById(id);
+
+  if (oldAccountId) {
+    removeDebtor(oldAccountId);
+  }
+
   addDebtor(id);
 }
 
-function addDebtor(accountId: string = "") {
-  const numberOfDebtors = debtors.value.length + 1;
-  const percentagePerDebtor = Math.floor(100 / numberOfDebtors);
-  const lastDebtorPercentage =
-    percentagePerDebtor + 100 - percentagePerDebtor * numberOfDebtors;
+watch(amount, updateDebtorsAmount);
+
+function addDebtor(account_id: string = "") {
+  debtors.value.push({
+    account_id,
+    amount: 0,
+  });
+  updateDebtorsAmount();
+}
+
+const debtorsAmountSum = computed(() =>
+  debtors.value
+    .map((debtor) => debtor.amount)
+    .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+);
+
+function updateDebtorsAmount() {
+  const numberOfDebtors = debtors.value.length;
+  const valuePerDebtor = parseFloat(
+    (amount.value / numberOfDebtors).toFixed(2)
+  );
+  const lastDebtor = debtors.value.pop();
 
   debtors.value = debtors.value.map((debtor) => {
     return {
       ...debtor,
-      percentage: percentagePerDebtor,
+      amount: valuePerDebtor,
     };
   });
 
-  debtors.value.push({
-    account_id: accountId,
-    percentage: lastDebtorPercentage,
-  });
+  if (lastDebtor) {
+    const lastDebtorAmount = parseFloat(
+      (amount.value - debtorsAmountSum.value).toFixed(2)
+    );
+    debtors.value.push({
+      ...lastDebtor,
+      amount: lastDebtorAmount,
+    });
+  }
 }
+
 function removeDebtor(accountId: string) {
   debtors.value = debtors.value.filter(
     (debtor) => debtor.account_id !== accountId
@@ -167,6 +195,12 @@ async function addCost() {
     amount.value === 0
   ) {
     errorMessage.value = "Some data is missing!";
+    return;
+  }
+
+  if (debtorsAmountSum.value !== amount.value) {
+    errorMessage.value =
+      "The total amount is not matching the sum of individual amounts";
     return;
   }
 

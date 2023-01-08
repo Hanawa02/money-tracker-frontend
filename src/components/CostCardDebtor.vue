@@ -4,7 +4,7 @@
       {{ accountDebtor?.name }}
     </div>
     <div class="flex-shrink-0 mr-4 text-gray">
-      {{ debtor.percentage }}<small>%</small>
+      {{ formattedPercentage }}<small>%</small>
     </div>
     <div class="flex-shrink-0 font-semibold">
       {{ formattedAmount }}<small> €</small>
@@ -30,14 +30,13 @@ const mainStore = useMainStore();
 
 const selectedAccount = mainStore.selectedAccount;
 
-const amount = computed((): number => {
-  return props.cost.amount * (props.debtor.percentage / 100);
-});
-
 const formattedAmount = computed((): string => {
-  return amount.value.toFixed(2);
+  return props.debtor.amount.toFixed(2);
 });
 
+const formattedPercentage = computed((): string => {
+  return ((props.debtor.amount * 100) / props.cost.amount).toFixed(2);
+});
 const accountDebtor = computed(() =>
   mainStore.getAccountById(props.debtor.account_id)
 );

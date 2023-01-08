@@ -42,6 +42,7 @@
         list="accountTags"
         @keyup.enter="addNewTag"
         @keydown.backspace="handleBackspaceClick"
+        enterkeyhint="enter"
       />
       <datalist id="accountTags">
         <option v-for="tag of accountTags" :key="tag" :value="tag"></option>

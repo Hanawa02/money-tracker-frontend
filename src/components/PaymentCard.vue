@@ -19,7 +19,7 @@
         >{{ accountTo.name }}</span
       >
       <span
-        class="flex-shrink-0 w-17 text-right font-semibold"
+        class="flex-shrink-0 w-17.5 text-right font-semibold"
         :class="{
           'text-mid-primary': selectedAccountIsPaidTo,
           'text-mid-red': selectedAccountIsPaying,

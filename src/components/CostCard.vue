@@ -5,7 +5,7 @@
         <span class="flex-shrink-0 text-mid-gray text-sm">{{ eventDate }}</span>
         <span class="w-full truncate">{{ description }}</span>
 
-        <span class="flex-shrink-0 w-17 text-right font-semibold"
+        <span class="flex-shrink-0 w-17.5 text-right font-semibold"
           >{{ formattedAmount }}<small> €</small></span
         >
       </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 max-w-md mx-auto">
+  <div class="p-4 max-w-md mx-auto pb-24">
     <h1 class="text-3xl text-center mb-8 font-bold text-dark-primary">
       {{ $t("pages.transactions.header") }}
     </h1>
@@ -63,7 +63,7 @@
       </template>
     </div>
   </div>
-  <div class="p-4 max-w-md mx-auto bg-white flex sticky w-full bottom-0 left-0">
+  <div class="p-4 max-w-md mx-auto bg-white flex fixed w-full bottom-0 left-0">
     <m-button
       @click="goBack"
       class="bg-white border-mid-primary border text-mid-primary w-full"

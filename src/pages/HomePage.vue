@@ -24,6 +24,9 @@
     <div class="fixed bottom-0 left-0 w-full">
       <div class="grid grid-cols-2 gap-4 py-4 px-4 w-full max-w-md mx-auto">
         <template v-if="selectedAccount">
+          <m-button class="hidden md:block col-span-2" @click="goToBulkAddCostsPage">
+            {{ $t("pages.home.bulkAddCosts") }}
+          </m-button>
           <m-button class="mx-auto w-full" @click="goToCreatePaymentPage" variant="primary-outline">
             {{ $t("pages.home.newPayment") }}
           </m-button>
@@ -51,12 +54,10 @@
 import { computed } from "vue";
 import { useMainStore } from "~/stores/main.store";
 
-import { useRouter } from "vue-router";
-import routePaths from "~/router/routes";
-
 import AccountSearchSelector from "~/components/AccountSearchSelector.vue";
 import SnapshotCard from "~/components/SnapshotCard.vue";
 import MButton from "~/components/MButton.vue";
+import useNavigation from "~/composables/navigation.composable";
 
 const mainStore = useMainStore();
 
@@ -64,20 +65,6 @@ const selectedAccount = computed(() => mainStore.selectedAccount);
 
 const snapshots = computed(() => mainStore.filteredSnapshots(selectedAccount.value));
 
-const router = useRouter();
-function goToCreateCostPage(): void {
-  router.push(routePaths.createCostPage.path);
-}
-
-function goToCreatePaymentPage(): void {
-  router.push(routePaths.createPaymentPage.path);
-}
-
-function goToCreateAccountPage(): void {
-  router.push(routePaths.createAccountPage.path);
-}
-
-function goToTransactionsPage(): void {
-  router.push(routePaths.transactionsPage.path);
-}
+const { goToCreateCostPage, goToCreatePaymentPage, goToCreateAccountPage, goToTransactionsPage, goToBulkAddCostsPage } =
+  useNavigation();
 </script>

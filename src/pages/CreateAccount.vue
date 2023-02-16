@@ -24,11 +24,10 @@ import { ref } from "vue";
 import { useMainStore } from "~/stores/main.store";
 import axios from "axios";
 import { useAxios } from "@vueuse/integrations/useAxios";
-import routePaths from "~/router/routes";
-import { useRouter } from "vue-router";
 
 import TextInput from "~/components/TextInput.vue";
 import MButton from "~/components/MButton.vue";
+import useNavigation from "~/composables/navigation.composable";
 
 const mainStore = useMainStore();
 
@@ -38,11 +37,7 @@ const instance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
 
-const router = useRouter();
-function goToHomePage(): void {
-  router.push(routePaths.homePage.path);
-}
-
+const { goToHomePage, goBack } = useNavigation();
 const errorMessage = ref("");
 
 async function addAccount(): Promise<void> {
@@ -64,9 +59,5 @@ async function addAccount(): Promise<void> {
   if (error) {
     errorMessage.value = error.value?.response?.data.error || error.value?.response?.data || "";
   }
-}
-
-function goBack(): void {
-  router.back();
 }
 </script>

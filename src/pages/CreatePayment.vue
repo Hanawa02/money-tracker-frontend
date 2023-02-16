@@ -56,12 +56,10 @@
 <script setup lang="ts">
 import axios from "axios";
 import { ref, computed } from "vue";
-import { useRouter } from "vue-router";
 import { useAxios } from "@vueuse/integrations/useAxios";
 import { useDateFormat } from "@vueuse/core";
 
 import { useMainStore } from "~/stores/main.store";
-import routePaths from "~/router/routes";
 
 import Account from "~/interfaces/account";
 
@@ -70,6 +68,7 @@ import DateInput from "~/components/DateInput.vue";
 import TextInput from "~/components/TextInput.vue";
 import NumberInput from "~/components/NumberInput.vue";
 import MButton from "~/components/MButton.vue";
+import useNavigation from "~/composables/navigation.composable";
 
 const mainStore = useMainStore();
 
@@ -109,10 +108,7 @@ const hiddenAccountsForLender = computed(() => {
   return [];
 });
 
-const router = useRouter();
-function goToHomePage(): void {
-  router.push(routePaths.homePage.path);
-}
+const { goToHomePage, goBack } = useNavigation();
 
 const errorMessage = ref("");
 
@@ -139,9 +135,5 @@ async function addPayment(): Promise<void> {
   if (error) {
     errorMessage.value = error.value?.response?.data.error || error.value?.response?.data || "";
   }
-}
-
-function goBack(): void {
-  router.back();
 }
 </script>

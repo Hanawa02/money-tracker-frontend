@@ -16,10 +16,10 @@
         </h2>
         <div class="flex flex-col gap-y-4 overflow-y-auto max-h-[calc(100vh-15rem)] p-4">
           <cost-card
-            v-for="item of mainStore.costs"
-            :key="item.id"
             class="border-2"
             :class="hasSameAmountAndDate(item) ? 'border-red -order-1' : 'border-transparent'"
+            v-for="item of mainStore.costs"
+            :key="item.id"
             :cost="item"
           />
         </div>

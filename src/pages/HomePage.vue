@@ -24,21 +24,19 @@
     <div class="fixed bottom-0 left-0 w-full">
       <div class="grid grid-cols-2 gap-4 py-4 px-4 w-full max-w-md mx-auto">
         <template v-if="selectedAccount">
-          <m-button class="border border-mid-primary text-mid-primary mx-auto w-full" @click="goToCreatePaymentPage">
+          <m-button class="mx-auto w-full" @click="goToCreatePaymentPage" variant="primary-outline">
             {{ $t("pages.home.newPayment") }}
           </m-button>
-          <m-button
-            class="border border-dark-primary bg-dark-primary text-white mx-auto w-full"
-            @click="goToCreateCostPage"
-          >
+          <m-button class="mx-auto w-full" @click="goToCreateCostPage">
             {{ $t("pages.home.newCost") }}
           </m-button>
-          <m-button class="border border-mid-gray text-mid-gray mx-auto w-full" @click="goToTransactionsPage">
+          <m-button class="mx-auto w-full" @click="goToTransactionsPage" variant="secondary-outline">
             {{ $t("pages.home.seeTransactions") }}
           </m-button>
         </template>
         <m-button
-          class="bg-dark-gray text-white mx-auto w-full"
+          class="mx-auto w-full"
+          variant="secondary"
           :class="{ 'col-span-2': !selectedAccount }"
           @click="goToCreateAccountPage"
         >

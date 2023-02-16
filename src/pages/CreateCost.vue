@@ -10,6 +10,10 @@
 <script setup lang="ts">
 import useNavigation from "~/composables/navigation.composable";
 import CostForm from "~/components/CostForm.vue";
+import { useMainStore } from "~/stores/main.store";
+
+const mainStore = useMainStore();
+mainStore.loadData();
 
 const { goToHomePage } = useNavigation();
 </script>

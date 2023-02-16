@@ -7,7 +7,7 @@ import CreateCost from "~/pages/CreateCost.vue";
 import CreatePayment from "~/pages/CreatePayment.vue";
 import Home from "~/pages/HomePage.vue";
 import Login from "~/pages/LoginPage.vue";
-import Transactions from "~/pages/Transactions.vue";
+import Transactions from "~/pages/TransactionsPage.vue";
 import BulkAddCosts from "~/pages/BulkAddCosts.vue";
 
 export const routes = [

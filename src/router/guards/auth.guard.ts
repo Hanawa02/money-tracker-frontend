@@ -1,9 +1,9 @@
-import { RouteLocationNormalized } from "vue-router";
+import { RouteLocationNormalized, RouteLocationRaw } from "vue-router";
 import { useAuthStore } from "~/stores/auth.store";
 import { useMainStore } from "~/stores/main.store";
 import routes from "../routes";
 
-export default function (to: RouteLocationNormalized): Partial<RouteLocationNormalized> | boolean {
+export default function (to: RouteLocationNormalized): void | Error | RouteLocationRaw | boolean {
   const authStore = useAuthStore();
   const mainStore = useMainStore();
 

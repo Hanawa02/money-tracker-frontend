@@ -27,13 +27,13 @@
           <m-button class="hidden md:block col-span-2" @click="goToBulkAddCostsPage">
             {{ $t("pages.home.bulkAddCosts") }}
           </m-button>
-          <m-button class="mx-auto w-full" @click="goToCreatePaymentPage" variant="primary-outline">
+          <m-button class="mx-auto w-full" variant="primary-outline" @click="goToCreatePaymentPage">
             {{ $t("pages.home.newPayment") }}
           </m-button>
           <m-button class="mx-auto w-full" @click="goToCreateCostPage">
             {{ $t("pages.home.newCost") }}
           </m-button>
-          <m-button class="mx-auto w-full" @click="goToTransactionsPage" variant="secondary-outline">
+          <m-button class="mx-auto w-full" variant="secondary-outline" @click="goToTransactionsPage">
             {{ $t("pages.home.seeTransactions") }}
           </m-button>
         </template>

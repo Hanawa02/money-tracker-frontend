@@ -4,6 +4,7 @@ import CreateCostPage from "~/locales/interfaces/pages/create-cost-page.interfac
 import CreatePaymentPage from "~/locales/interfaces/pages/create-payment-page.interface";
 import LoginPage from "~/locales/interfaces/pages/login-page.interface";
 import TransactionsPage from "~/locales/interfaces/pages/transactions-page.interface";
+import BulkAddCostsPage from "~/locales/interfaces/pages/bulk-add-costs-page.interface";
 
 export default interface Pages {
   home: HomePage;
@@ -12,4 +13,5 @@ export default interface Pages {
   createPayment: CreatePaymentPage;
   login: LoginPage;
   transactions: TransactionsPage;
+  bulkAddCosts: BulkAddCostsPage;
 }

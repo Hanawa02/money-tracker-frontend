@@ -6,7 +6,7 @@ import createCost from "./create-cost-page.message";
 import createPayment from "./create-payment-page.message";
 import login from "./login-page.message";
 import transactions from "./transactions-page.message";
-
+import bulkAddCosts from "./bulk-add-costs-page.message";
 const pages: Pages = {
   home,
   createAccount,
@@ -14,6 +14,7 @@ const pages: Pages = {
   createPayment,
   login,
   transactions,
+  bulkAddCosts,
 };
 
 export default pages;

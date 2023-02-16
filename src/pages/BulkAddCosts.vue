@@ -18,7 +18,7 @@
           <cost-card
             class="border-2"
             :class="hasSameAmountAndDate(item) ? 'border-red -order-1' : 'border-transparent'"
-            v-for="item of mainStore.costs"
+            v-for="item of sortedCosts"
             :key="item.id"
             :cost="item"
           />
@@ -34,10 +34,19 @@ import Cost from "~/interfaces/cost";
 import CostCard from "~/components/CostCard.vue";
 import { useMainStore } from "~/stores/main.store";
 import { useDateFormat } from "@vueuse/shared";
-import { reactive } from "vue";
+import { computed, reactive } from "vue";
 
 const mainStore = useMainStore();
 mainStore.loadData();
+
+function sortByEventDate(a: Cost, b: Cost): number {
+  const dateA = new Date(a.event_date);
+  const dateB = new Date(b.event_date);
+
+  return dateB.getTime() - dateA.getTime();
+}
+
+const sortedCosts = computed(() => mainStore.costs.sort(sortByEventDate));
 
 const newCost = reactive({
   amount: 0,

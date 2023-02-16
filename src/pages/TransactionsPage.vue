@@ -53,10 +53,12 @@
       </template>
     </div>
   </div>
-  <div class="p-4 max-w-md mx-auto bg-white flex fixed w-full bottom-0 left-0">
-    <m-button class="bg-white border-mid-primary border text-mid-primary w-full" @click="goBack">
-      {{ $t("pages.transactions.goBackButton") }}
-    </m-button>
+  <div class="bg-white flex fixed w-full bottom-0 left-0">
+    <div class="p-4 max-w-md mx-auto w-full">
+      <m-button class="bg-white border-mid-primary border text-mid-primary w-full" @click="goBack">
+        {{ $t("pages.transactions.goBackButton") }}
+      </m-button>
+    </div>
   </div>
 </template>
 

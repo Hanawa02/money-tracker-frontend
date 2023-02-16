@@ -62,6 +62,7 @@ export const useMainStore = defineStore("Main", {
         this.loadSnapshots(),
         this.loadCosts(),
         this.loadPayments(),
+        this.loadTags(),
       ]);
 
       this.accounts = accounts;

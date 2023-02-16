@@ -128,9 +128,9 @@ export const useMainStore = defineStore("Main", {
           return state.snapshots;
         }
 
-        const list = state.snapshots.filter(
-          (item) => item.payer_account.id === selectedAccount?.id
-        );
+        const includesSelectedAccount = (item: Snapshot) => item.payer_account.id === selectedAccount?.id;
+        const haveAmountToPayOrReceive = (item: Snapshot) => item.amount !== 0.0;
+        const list = state.snapshots.filter(includesSelectedAccount).filter(haveAmountToPayOrReceive);
 
         return list;
       };

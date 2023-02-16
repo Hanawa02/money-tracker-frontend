@@ -1,7 +1,7 @@
 {
   "singleQuote": false,
   "endOfLine": "auto",
-  "printWidth": 80,
+  "printWidth": 120,
   "semi": true,
   "quoteProps": "consistent"
 }

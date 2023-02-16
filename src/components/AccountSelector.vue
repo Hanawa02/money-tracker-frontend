@@ -53,14 +53,14 @@ const emit = defineEmits<{
   (_event: "change", _accountId: string, _oldAccountId: string | undefined): void;
 }>();
 
-function setSelectedAccount(accountId: string) {
+function setSelectedAccount(accountId: string): void {
   validateInput(accountId);
   if (accountId !== props.selectedAccountId) {
     emit("change", accountId, props.selectedAccountId);
   }
 }
 
-function updateSelectedAccount(event: Event) {
+function updateSelectedAccount(event: Event): void {
   const newValue = (event?.target as HTMLSelectElement).value;
   setSelectedAccount(newValue);
 }

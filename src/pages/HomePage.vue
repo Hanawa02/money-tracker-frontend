@@ -67,19 +67,19 @@ const selectedAccount = computed(() => mainStore.selectedAccount);
 const snapshots = computed(() => mainStore.filteredSnapshots(selectedAccount.value));
 
 const router = useRouter();
-function goToCreateCostPage() {
+function goToCreateCostPage(): void {
   router.push(routePaths.createCostPage.path);
 }
 
-function goToCreatePaymentPage() {
+function goToCreatePaymentPage(): void {
   router.push(routePaths.createPaymentPage.path);
 }
 
-function goToCreateAccountPage() {
+function goToCreateAccountPage(): void {
   router.push(routePaths.createAccountPage.path);
 }
 
-function goToTransactionsPage() {
+function goToTransactionsPage(): void {
   router.push(routePaths.transactionsPage.path);
 }
 </script>

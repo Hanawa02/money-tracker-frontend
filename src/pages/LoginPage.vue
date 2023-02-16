@@ -33,7 +33,7 @@ onBeforeMount(() => {
   }
 });
 
-function authenticateWithDiscord() {
+function authenticateWithDiscord(): void {
   authStore.authenticateWithDiscord();
 }
 </script>

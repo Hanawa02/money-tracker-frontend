@@ -11,6 +11,7 @@
 
   <div
     v-for="account of first5Accounts"
+    :key="account.id"
     class="flex items-center gap-x-2 px-3 py-2 border-primary border rounded mb-2 cursor-pointer"
     @click="updateSelectedAccount(account.id)"
   >
@@ -32,7 +33,7 @@ import Account from "~/interfaces/account";
 
 const mainStore = useMainStore();
 
-function updateSelectedAccount(accountId: string) {
+function updateSelectedAccount(accountId: string): void {
   mainStore.selectAccount(accountId);
 }
 

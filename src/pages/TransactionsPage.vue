@@ -96,7 +96,7 @@ const filteredItems = computed(() => {
   return items.sort(sortByEventDate);
 });
 
-function sortByEventDate(a: Payment | Cost, b: Payment | Cost) {
+function sortByEventDate(a: Payment | Cost, b: Payment | Cost): number {
   const dateA = new Date(a.event_date);
   const dateB = new Date(b.event_date);
 
@@ -105,7 +105,7 @@ function sortByEventDate(a: Payment | Cost, b: Payment | Cost) {
 
 const accountIdFilter = ref<string>(mainStore.selectedAccount?.id || "");
 
-function updateFilterByAccount(accountId: string) {
+function updateFilterByAccount(accountId: string): void {
   accountIdFilter.value = accountId;
 }
 
@@ -156,7 +156,7 @@ function filterPaymentByAccountId(payment: Payment): boolean {
 /* Navigation */
 const router = useRouter();
 
-function goBack() {
+function goBack(): void {
   router.back();
 }
 </script>

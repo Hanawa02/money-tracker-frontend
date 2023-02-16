@@ -20,9 +20,10 @@
 
     <number-input
       :id="`amount-input-${debtor.account_id}`"
-      v-model="debtor.amount"
+      :model-value="debtor.amount"
       :label="$t('pages.createCost.amountInput.label')"
       :step="0.01"
+      @change="updateAmount"
     />
   </div>
 </template>
@@ -49,7 +50,7 @@ const emit = defineEmits<{
   (_event: "removeDebtor", _account_id: string): void;
 }>();
 
-function removeDebtor() {
+function removeDebtor(): void {
   emit("removeDebtor", props.debtor.account_id);
 }
 
@@ -58,8 +59,15 @@ function getFilteredAccountIds(): string[] {
 }
 
 function updateAccountId(newValue: string): void {
-  const debtor = props.debtor;
+  const debtor = { ...props.debtor };
   debtor.account_id = newValue;
+
+  emit("update:debtor", debtor);
+}
+
+function updateAmount(newValue: number): void {
+  const debtor = { ...props.debtor };
+  debtor.amount = newValue;
 
   emit("update:debtor", debtor);
 }

@@ -39,7 +39,7 @@ const authStore = useAuthStore();
 const isAuthenticated = computed(() => authStore.isAuthenticated);
 
 const router = useRouter();
-function logout() {
+function logout(): void {
   authStore.logout();
   router.push({ name: routes.loginPage.name });
 }

@@ -85,7 +85,7 @@ const instance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
 
-function updatePayer(id: string) {
+function updatePayer(id: string): void {
   payer.value = mainStore.getAccountById(id);
 }
 
@@ -97,7 +97,7 @@ const hiddenAccountsForPayer = computed(() => {
   return [];
 });
 
-function updateLender(id: string) {
+function updateLender(id: string): void {
   lender.value = mainStore.getAccountById(id);
 }
 
@@ -110,13 +110,13 @@ const hiddenAccountsForLender = computed(() => {
 });
 
 const router = useRouter();
-function goToHomePage() {
+function goToHomePage(): void {
   router.push(routePaths.homePage.path);
 }
 
 const errorMessage = ref("");
 
-async function addPayment() {
+async function addPayment(): Promise<void> {
   const payload = {
     method: "POST",
     data: {
@@ -141,7 +141,7 @@ async function addPayment() {
   }
 }
 
-function goBack() {
+function goBack(): void {
   router.back();
 }
 </script>

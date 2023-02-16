@@ -3,7 +3,7 @@ import { useAuthStore } from "~/stores/auth.store";
 import { useMainStore } from "~/stores/main.store";
 import routes from "../routes";
 
-export default function (to: RouteLocationNormalized, _from: RouteLocationNormalized) {
+export default function (to: RouteLocationNormalized): Partial<RouteLocationNormalized> | boolean {
   const authStore = useAuthStore();
   const mainStore = useMainStore();
 

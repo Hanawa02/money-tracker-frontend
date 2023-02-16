@@ -43,7 +43,7 @@
           class="mb-6"
           :debtors="debtors"
           :cost-amount="amount"
-          @removeDebtor="removeDebtor(debtor.account_id)"
+          @remove-debtor="removeDebtor(debtor.account_id)"
         />
       </template>
       <m-button class="border border-mid-primary text-mid-primary w-full mb-4" @click="addDebtor('')">
@@ -94,7 +94,7 @@ const tags = ref<string[]>([]);
 
 const debtors = ref<Debtor[]>([]);
 
-function updatePayer(id: string, oldAccountId: string | undefined) {
+function updatePayer(id: string, oldAccountId: string | undefined): void {
   payer.value = mainStore.getAccountById(id);
 
   if (oldAccountId) {
@@ -106,7 +106,7 @@ function updatePayer(id: string, oldAccountId: string | undefined) {
 
 watch(amount, updateDebtorsAmount);
 
-function addDebtor(account_id: string = "") {
+function addDebtor(account_id: string = ""): void {
   debtors.value.push({
     account_id,
     amount: 0,
@@ -118,7 +118,7 @@ const debtorsAmountSum = computed(() =>
   debtors.value.map((debtor) => debtor.amount).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
 );
 
-function updateDebtorsAmount() {
+function updateDebtorsAmount(): void {
   const numberOfDebtors = debtors.value.length;
   const valuePerDebtor = parseFloat((amount.value / numberOfDebtors).toFixed(2));
   const lastDebtor = debtors.value.pop();
@@ -139,7 +139,7 @@ function updateDebtorsAmount() {
   }
 }
 
-function removeDebtor(accountId: string) {
+function removeDebtor(accountId: string): void {
   debtors.value = debtors.value.filter((debtor) => debtor.account_id !== accountId);
 }
 
@@ -149,17 +149,17 @@ onMounted(() => {
 
 const router = useRouter();
 
-function goBack() {
+function goBack(): void {
   router.back();
 }
 
-function goToHomePage() {
+function goToHomePage(): void {
   router.push(routePaths.homePage.path);
 }
 
 const errorMessage = ref("");
 
-async function addCost() {
+async function addCost(): Promise<void> {
   if (!payer.value?.id || debtors.value?.length <= 0 || description.value === "" || amount.value === 0) {
     errorMessage.value = "Some data is missing!";
     return;

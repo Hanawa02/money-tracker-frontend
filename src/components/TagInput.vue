@@ -68,7 +68,7 @@ const tagInput = ref<HTMLInputElement | null>();
 const newTag = ref<string>("");
 const duplicatedTag = ref<string>("");
 
-function addNewTag() {
+function addNewTag(): void {
   const tag = newTag.value?.trim();
 
   if (!tag) {
@@ -91,7 +91,7 @@ function addNewTag() {
   focusInput();
 }
 
-function removeTag(tag: string) {
+function removeTag(tag: string): void {
   if (tag && props.modelValue.includes(tag)) {
     const tags = props.modelValue.filter((item) => item !== tag);
 

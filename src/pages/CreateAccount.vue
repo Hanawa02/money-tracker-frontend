@@ -39,13 +39,13 @@ const instance = axios.create({
 });
 
 const router = useRouter();
-function goToHomePage() {
+function goToHomePage(): void {
   router.push(routePaths.homePage.path);
 }
 
 const errorMessage = ref("");
 
-async function addAccount() {
+async function addAccount(): Promise<void> {
   const payload = {
     method: "POST",
     data: {
@@ -66,7 +66,7 @@ async function addAccount() {
   }
 }
 
-function goBack() {
+function goBack(): void {
   router.back();
 }
 </script>

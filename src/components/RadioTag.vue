@@ -9,7 +9,7 @@
       }"
     />
   </label>
-  <input :id="id" v-model="modelValue" type="radio" class="hidden" :value="value" @change="onChange" />
+  <input :id="id" type="radio" class="hidden" :value="value" @change="onChange" />
 </template>
 
 <script setup lang="ts">
@@ -25,7 +25,7 @@ interface IProps {
 defineProps<IProps>();
 const emit = defineEmits<{ (_event: "update:modelValue", _value: string): void }>();
 
-function onChange(event: Event) {
+function onChange(event: Event): void {
   const newValue = (event.target as HTMLInputElement).value;
   emit("update:modelValue", newValue);
 }

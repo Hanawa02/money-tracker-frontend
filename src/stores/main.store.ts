@@ -112,20 +112,20 @@ export const useMainStore = defineStore("Main", {
       return this.accounts.find((item) => item.id === this.selectedAccountId);
     },
     filteredSnapshots(state) {
-      return (selectedAccount: Account | undefined) => {
+      return (selectedAccount: Account | undefined): Snapshot[] => {
         if (!selectedAccount) {
           return state.snapshots;
         }
 
-        const includesSelectedAccount = (item: Snapshot) => item.payer_account.id === selectedAccount?.id;
-        const haveAmountToPayOrReceive = (item: Snapshot) => item.amount !== 0.0;
+        const includesSelectedAccount = (item: Snapshot): boolean => item.payer_account.id === selectedAccount?.id;
+        const haveAmountToPayOrReceive = (item: Snapshot): boolean => item.amount !== 0.0;
         const list = state.snapshots.filter(includesSelectedAccount).filter(haveAmountToPayOrReceive);
 
         return list;
       };
     },
     getAccountById(state) {
-      return (id: string) => state.accounts.find((item) => item.id === id);
+      return (id: string): Account | undefined => state.accounts.find((item) => item.id === id);
     },
   },
 });

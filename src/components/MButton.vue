@@ -20,7 +20,7 @@ const variantStyles: Record<Variant, string> = {
   "secondary-outline": "text-mid-gray hover:bg-darkest-gray hover:text-white",
 };
 interface IProps {
-  variant: Variant;
+  variant?: Variant;
 }
 const props = withDefaults(defineProps<IProps>(), { variant: "primary" });
 

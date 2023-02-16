@@ -1,51 +1,24 @@
 <template>
-  <div
-    class="
-      relative
-      flex
-      items-center
-      mb-4
-      px-3
-      py-2
-      border-extra-light-primary border
-      rounded
-    "
-  >
-    <m-icon
-      icon="search"
-      class="w-6 h-6 text-primary flex-shrink-0 outline-none z-10"
-    />
+  <div class="relative flex items-center mb-4 px-3 py-2 border-extra-light-primary border rounded">
+    <m-icon icon="search" class="w-6 h-6 text-primary flex-shrink-0 outline-none z-10" />
     <input
+      v-model="searchInput"
       type="text"
       placeholder="search"
       class="w-full absolute pl-10 pr-3 h-full left-0 bg-transparent"
-      v-model="searchInput"
     />
   </div>
 
   <div
     v-for="account of first5Accounts"
-    class="
-      flex
-      items-center
-      gap-x-2
-      px-3
-      py-2
-      border-primary border
-      rounded
-      mb-2
-      cursor-pointer
-    "
+    class="flex items-center gap-x-2 px-3 py-2 border-primary border rounded mb-2 cursor-pointer"
     @click="updateSelectedAccount(account.id)"
   >
     <m-icon icon="person" class="text-primary w-6 h-6" />
     <span class="font-medium text-md">{{ account.name }}</span>
   </div>
 
-  <div
-    class="text-mid-gray text-sm font-medium my-2"
-    v-if="notDisplayedAccountsNumber > 0"
-  >
+  <div v-if="notDisplayedAccountsNumber > 0" class="text-mid-gray text-sm font-medium my-2">
     {{ notDisplayedAccountsNumber }} accounts are not displayed.
   </div>
 </template>
@@ -66,11 +39,9 @@ function updateSelectedAccount(accountId: string) {
 const searchInput = ref("");
 const allAccounts = computed<Account[]>((): Account[] => mainStore.accounts);
 const accounts = computed<Account[]>((): Account[] => {
-  if (searchInput) {
+  if (searchInput.value) {
     return allAccounts.value.filter((account) =>
-      account.name
-        .toLocaleLowerCase()
-        .includes(searchInput.value.toLocaleLowerCase())
+      account.name.toLocaleLowerCase().includes(searchInput.value.toLocaleLowerCase())
     );
   }
 
@@ -78,7 +49,5 @@ const accounts = computed<Account[]>((): Account[] => {
 });
 
 const first5Accounts = computed(() => accounts.value.slice(0, 5));
-const notDisplayedAccountsNumber = computed(
-  () => accounts.value.length - first5Accounts.value.length
-);
+const notDisplayedAccountsNumber = computed(() => accounts.value.length - first5Accounts.value.length);
 </script>

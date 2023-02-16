@@ -3,15 +3,13 @@
     :class="`
       flex items-center pt-2 pb-3 px-4
       border rounded-lg shadow-card group ${
-        hasError
-          ? 'border-red'
-          : 'border-transparent focus-within:border-light-primary'
+        hasError ? 'border-red' : 'border-transparent focus-within:border-light-primary'
       }
     `"
     data-type="input-field"
   >
     <div class="flex flex-col w-full">
-      <m-label :has-error="hasError" @click="focusInput" :disabled="disabled">
+      <m-label :has-error="hasError" :disabled="disabled" @click="focusInput">
         {{ label }}
         <span v-if="required" class="ml-0.5 text-gray">*</span>
       </m-label>

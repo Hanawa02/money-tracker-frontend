@@ -2,27 +2,13 @@
   <div class="w-full min-h-screen h-full max-w-md mx-auto">
     <header
       v-if="isAuthenticated"
-      class="
-        w-full
-        border-b border-light-gray
-        bg-white
-        sticky
-        top-0
-        flex
-        p-4
-        items-center
-      "
+      class="w-full border-b border-light-gray bg-white sticky top-0 flex p-4 items-center"
     >
       <button class="underline text-mid-primary" @click="logout">Logout</button>
       <span class="flex items-center w-full justify-center"
-        ><img src="/favicon.svg" class="w-6 h-6 flex-shrink-0 mr-2" /> Money
-        Tracker</span
+        ><img src="/favicon.svg" class="w-6 h-6 flex-shrink-0 mr-2" /> Money Tracker</span
       >
-      <button
-        class="flex items-center"
-        v-if="selectedAccountName"
-        @click="clearSelectedAccount"
-      >
+      <button v-if="selectedAccountName" class="flex items-center" @click="clearSelectedAccount">
         <span class="text-primary pr-2 font-medium truncate">
           {{ selectedAccountName }}
         </span>
@@ -60,9 +46,7 @@ function logout() {
 
 const mainStore = useMainStore();
 
-const selectedAccountName = computed(
-  () => mainStore.selectedAccount?.name || ""
-);
+const selectedAccountName = computed(() => mainStore.selectedAccount?.name || "");
 
 function clearSelectedAccount(): void {
   mainStore.selectAccount("");

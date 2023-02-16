@@ -23,9 +23,7 @@ const emit = defineEmits<{
 const iconName = computed((): string => {
   const nameParts = props.icon.split("-");
 
-  return nameParts
-    .map((item) => item[0].toUpperCase() + item.slice(1))
-    .join("");
+  return nameParts.map((item) => item[0].toUpperCase() + item.slice(1)).join("");
 });
 
 const IconComponent = defineAsyncComponent(() => {

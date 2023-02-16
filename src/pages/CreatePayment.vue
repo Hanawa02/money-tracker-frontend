@@ -4,55 +4,49 @@
       {{ $t("pages.createPayment.header") }}
     </h1>
     <date-input
+      id="event-date"
       v-model="eventDate"
       :label="$t('pages.createPayment.dateInput.label')"
-      id="event-date"
       class="mb-4"
     ></date-input>
     <account-selector
       label="From"
-      @change="updatePayer"
-      :selectedAccountId="payer?.id"
-      :hiddenAccountIds="hiddenAccountsForPayer"
+      :selected-account-id="payer?.id"
+      :hidden-account-ids="hiddenAccountsForPayer"
       class="mb-4"
+      @change="updatePayer"
     ></account-selector>
     <account-selector
       label="Pay To"
-      @change="updateLender"
-      :selectedAccountId="lender?.id"
-      :hiddenAccountIds="hiddenAccountsForLender"
+      :selected-account-id="lender?.id"
+      :hidden-account-ids="hiddenAccountsForLender"
       class="mb-4"
+      @change="updateLender"
     ></account-selector>
 
     <text-input
-      v-model="description"
       id="event-description"
+      v-model="description"
       :label="$t('pages.createPayment.descriptionInput.label')"
       :placeholder="$t('pages.createPayment.descriptionInput.placeholder')"
       class="mb-4"
     />
     <number-input
-      v-model="amount"
       id="event-description"
+      v-model="amount"
       :label="$t('pages.createPayment.amountInput.label')"
       class="mb-4"
     />
 
-    <div
-      v-if="errorMessage"
-      class="bg-lightest-red text-dark-red rounded p-3 border border-light-red"
-    >
+    <div v-if="errorMessage" class="bg-lightest-red text-dark-red rounded p-3 border border-light-red">
       {{ errorMessage }}
     </div>
 
     <div class="flex gap-4 mt-8">
-      <m-button
-        @click="goBack"
-        class="bg-white border-mid-primary border text-mid-primary w-full"
-      >
+      <m-button class="bg-white border-mid-primary border text-mid-primary w-full" @click="goBack">
         {{ $t("pages.createPayment.cancelButton") }}
       </m-button>
-      <m-button @click="addPayment" class="bg-mid-primary text-white w-full">
+      <m-button class="bg-mid-primary text-white w-full" @click="addPayment">
         {{ $t("pages.createPayment.addPaymentButton") }}
       </m-button>
     </div>
@@ -134,11 +128,7 @@ async function addPayment() {
     },
   };
 
-  const { data, error } = await useAxios(
-    `account/${payer.value?.id}/payment`,
-    payload,
-    instance
-  );
+  const { data, error } = await useAxios(`account/${payer.value?.id}/payment`, payload, instance);
 
   if (data.value && !error.value) {
     mainStore.loadData();
@@ -147,8 +137,7 @@ async function addPayment() {
   }
 
   if (error) {
-    errorMessage.value =
-      error.value?.response?.data.error || error.value?.response?.data || "";
+    errorMessage.value = error.value?.response?.data.error || error.value?.response?.data || "";
   }
 }
 

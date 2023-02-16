@@ -3,9 +3,7 @@
     :class="`
       flex items-center pt-2 pb-3 px-4
       border rounded-lg shadow-card group ${
-        hasError
-          ? 'border-red'
-          : 'border-transparent focus-within:border-light-primary'
+        hasError ? 'border-red' : 'border-transparent focus-within:border-light-primary'
       }
     `"
     data-type="input-field"
@@ -19,19 +17,14 @@
       <select
         name="account"
         :value="selectedAccountId"
-        @change="updateSelectedAccount"
         class="w-full bg-transparent cursor-pointer outline-none"
         :class="{ 'text-gray': !selectedAccountId }"
+        @change="updateSelectedAccount"
       >
         <option value="" class="text-gray">
           {{ $t("components.accountSelector.noneSelected") }}
         </option>
-        <option
-          v-for="account of accounts"
-          :key="account.id"
-          :value="account.id"
-          class="text-black"
-        >
+        <option v-for="account of accounts" :key="account.id" :value="account.id" class="text-black">
           {{ account.name }}
         </option>
       </select>
@@ -57,11 +50,7 @@ const mainStore = useMainStore();
 
 const props = withDefaults(defineProps<IProps>(), { required: false });
 const emit = defineEmits<{
-  (
-    _event: "change",
-    _accountId: string,
-    _oldAccountId: string | undefined
-  ): void;
+  (_event: "change", _accountId: string, _oldAccountId: string | undefined): void;
 }>();
 
 function setSelectedAccount(accountId: string) {
@@ -78,9 +67,7 @@ function updateSelectedAccount(event: Event) {
 
 const accounts = computed(() => {
   if (props.hiddenAccountIds && props.hiddenAccountIds.length > 0) {
-    return mainStore.accounts.filter(
-      (account) => !props.hiddenAccountIds?.includes(account.id)
-    );
+    return mainStore.accounts.filter((account) => !props.hiddenAccountIds?.includes(account.id));
   }
 
   return mainStore.accounts;

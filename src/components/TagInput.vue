@@ -3,9 +3,7 @@
     :class="`
       flex flex-col pt-2 pb-3 px-4
       border rounded-lg shadow-card group ${
-        hasError
-          ? 'border-red'
-          : 'border-transparent focus-within:border-light-primary'
+        hasError ? 'border-red' : 'border-transparent focus-within:border-light-primary'
       }
     `"
     data-type="input-field"
@@ -28,21 +26,14 @@
       <input
         :id="id"
         ref="tagInput"
-        type="text"
         v-model.trim="newTag"
-        class="
-          hide-dropdown-icon
-          outline-none
-          text-black-primary
-          placeholder:text-light-gray
-          w-24
-          bg-transparent
-        "
+        type="text"
+        class="hide-dropdown-icon outline-none text-black-primary placeholder:text-light-gray w-24 bg-transparent"
         :placeholder="placeholder"
         list="accountTags"
+        enterkeyhint="enter"
         @keyup.enter="addNewTag"
         @keydown.backspace="handleBackspaceClick"
-        enterkeyhint="enter"
       />
       <datalist id="accountTags">
         <option v-for="tag of accountTags" :key="tag" :value="tag"></option>
@@ -145,9 +136,7 @@ onMounted(() => {
   mainStore.loadTags();
 });
 
-const accountTags = computed(() =>
-  mainStore.tags.filter((item) => !props.modelValue.includes(item))
-);
+const accountTags = computed(() => mainStore.tags.filter((item) => !props.modelValue.includes(item)));
 </script>
 
 <style>

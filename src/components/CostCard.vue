@@ -1,21 +1,14 @@
 <template>
-  <details class="flex flex-col shadow-card p-3 rounded" v-if="accountPayer">
+  <details v-if="accountPayer" class="flex flex-col shadow-card p-3 rounded">
     <summary class="flex flex-col mb-2">
       <div class="flex gap-2.5 items-center">
         <span class="flex-shrink-0 text-mid-gray text-sm">{{ eventDate }}</span>
         <span class="w-full truncate">{{ description }}</span>
 
-        <span class="flex-shrink-0 w-17.5 text-right font-semibold"
-          >{{ formattedAmount }}<small> €</small></span
-        >
+        <span class="flex-shrink-0 w-17.5 text-right font-semibold">{{ formattedAmount }}<small> €</small></span>
       </div>
       <div v-if="cost.tags.length" class="flex flex-wrap mt-2 gap-2">
-        <m-tag
-          v-for="tag of cost.tags"
-          :key="tag"
-          :tag="tag"
-          :disabled="true"
-        />
+        <m-tag v-for="tag of cost.tags" :key="tag" :tag="tag" :disabled="true" />
       </div>
     </summary>
     <div>
@@ -30,9 +23,9 @@
         >
       </div>
       <cost-card-debtor
-        class="odd:bg-white-primary"
         v-for="debtor of cost.debtors"
         :key="debtor.id"
+        class="odd:bg-white-primary"
         :cost="cost"
         :debtor="debtor"
       />
@@ -59,9 +52,7 @@ interface IProps {
 
 const props = defineProps<IProps>();
 
-const eventDate = computed(
-  () => useDateFormat(new Date(props.cost.event_date), "DD-MM-YYYY").value
-);
+const eventDate = computed(() => useDateFormat(new Date(props.cost.event_date), "DD-MM-YYYY").value);
 
 const mainStore = useMainStore();
 
@@ -73,11 +64,7 @@ const formattedAmount = computed(() => {
 
 const description = computed(() => props.cost.description || "-");
 
-const accountPayer = computed(() =>
-  mainStore.getAccountById(props.cost.account_id)
-);
+const accountPayer = computed(() => mainStore.getAccountById(props.cost.account_id));
 
-const selectedAccountIsPaying = computed(
-  () => accountPayer.value?.id === selectedAccount?.id
-);
+const selectedAccountIsPaying = computed(() => accountPayer.value?.id === selectedAccount?.id);
 </script>

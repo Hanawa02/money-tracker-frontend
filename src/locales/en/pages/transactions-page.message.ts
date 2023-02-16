@@ -17,8 +17,7 @@ const transactionpage: TransactionsPage = {
     },
   },
   paymentCard: {
-    fullDescription:
-      "<span class='underline'>{from}</span> paid to <span class='underline'>{to}</span>: {description}",
+    fullDescription: "<span class='underline'>{from}</span> paid to <span class='underline'>{to}</span>: {description}",
   },
   goBackButton: "Go back",
 };

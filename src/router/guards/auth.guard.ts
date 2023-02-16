@@ -3,14 +3,11 @@ import { useAuthStore } from "~/stores/auth.store";
 import { useMainStore } from "~/stores/main.store";
 import routes from "../routes";
 
-export default function (
-  to: RouteLocationNormalized,
-  _from: RouteLocationNormalized
-) {
+export default function (to: RouteLocationNormalized, _from: RouteLocationNormalized) {
   const authStore = useAuthStore();
   const mainStore = useMainStore();
 
-  if (!!to.query.access_token) {
+  if (to.query.access_token) {
     const accessToken = to.query.access_token.toString();
     /*  
       always remove the access token from the url, this comes 
@@ -24,7 +21,7 @@ export default function (
   }
 
   const sessionAccessToken = sessionStorage.getItem("accessToken");
-  if (!!sessionAccessToken) {
+  if (sessionAccessToken) {
     authStore.loginUser(sessionAccessToken);
   }
 

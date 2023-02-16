@@ -5,15 +5,7 @@
     </h1>
 
     <m-button
-      class="
-        bg-[#7289da]
-        text-white
-        mx-auto
-        w-full
-        flex
-        items-center
-        justify-center
-      "
+      class="bg-[#7289da] text-white mx-auto w-full flex items-center justify-center"
       @click="authenticateWithDiscord"
     >
       <m-icon icon="discord" class="w-6 h-6 mr-2"></m-icon>

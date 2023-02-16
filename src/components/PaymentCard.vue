@@ -1,8 +1,5 @@
 <template>
-  <details
-    v-if="accountFrom && accountTo"
-    class="flex shadow-card p-3 rounded cursor-pointer"
-  >
+  <details v-if="accountFrom && accountTo" class="flex shadow-card p-3 rounded cursor-pointer">
     <summary class="flex gap-2 items-center">
       <span class="flex-shrink-0 text-gray text-sm">{{ eventDate }}</span>
       <span
@@ -56,21 +53,15 @@ interface IProps {
 
 const props = defineProps<IProps>();
 
-const eventDate = computed(
-  () => useDateFormat(new Date(props.payment.event_date), "DD-MM-YYYY").value
-);
+const eventDate = computed(() => useDateFormat(new Date(props.payment.event_date), "DD-MM-YYYY").value);
 
 const mainStore = useMainStore();
 
 const selectedAccount = mainStore.selectedAccount;
 
-const accountFrom = computed(() =>
-  mainStore.getAccountById(props.payment.payer_account_id)
-);
+const accountFrom = computed(() => mainStore.getAccountById(props.payment.payer_account_id));
 
-const accountTo = computed(() =>
-  mainStore.getAccountById(props.payment.lender_account_id)
-);
+const accountTo = computed(() => mainStore.getAccountById(props.payment.lender_account_id));
 
 const formattedAmount = computed(() => {
   return props.payment.amount.toFixed(2);
@@ -78,11 +69,7 @@ const formattedAmount = computed(() => {
 
 const description = computed(() => props.payment.description || "-");
 
-const selectedAccountIsPaidTo = computed(
-  () => accountTo.value?.id === selectedAccount?.id
-);
+const selectedAccountIsPaidTo = computed(() => accountTo.value?.id === selectedAccount?.id);
 
-const selectedAccountIsPaying = computed(
-  () => accountFrom.value?.id === selectedAccount?.id
-);
+const selectedAccountIsPaying = computed(() => accountFrom.value?.id === selectedAccount?.id);
 </script>

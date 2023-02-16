@@ -3,9 +3,7 @@
     :class="`
       flex items-center pt-2 pb-3 px-4
       border rounded-lg shadow-card group ${
-        hasError
-          ? 'border-red'
-          : 'border-transparent focus-within:border-light-primary'
+        hasError ? 'border-red' : 'border-transparent focus-within:border-light-primary'
       }
     `"
     data-type="input-field"
@@ -21,13 +19,7 @@
         ref="input"
         :value="modelValue"
         type="date"
-        class="
-          w-full
-          outline-none
-          text-black-primary
-          placeholder:text-light-gray
-          bg-transparent
-        "
+        class="w-full outline-none text-black-primary placeholder:text-light-gray bg-transparent"
         :placeholder="placeholder"
         @input="updateValue"
         @keyup.enter="handleEnterKey"

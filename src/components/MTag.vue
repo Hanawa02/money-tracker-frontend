@@ -1,6 +1,5 @@
 <template>
   <div
-    @click="handleClick"
     class="
       flex
       items-center
@@ -15,6 +14,7 @@
       cursor-pointer
     "
     data-value="tag"
+    @click="handleClick"
   >
     {{ tag }}
     <m-icon v-if="!disabled" icon="close" class="w-4 h-4 ml-1 text-black" />

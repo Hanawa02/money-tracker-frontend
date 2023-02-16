@@ -38,9 +38,7 @@ export const useMainStore = defineStore("Main", {
       return result.data;
     },
     async loadSnapshots() {
-      const result = await axios.get(
-        `${import.meta.env.VITE_API_URL}/snapshot`
-      );
+      const result = await axios.get(`${import.meta.env.VITE_API_URL}/snapshot`);
       return result.data;
     },
     async loadCosts() {
@@ -53,11 +51,7 @@ export const useMainStore = defineStore("Main", {
     },
     async loadTags() {
       if (this.selectedAccount) {
-        const result = await axios.get(
-          `${import.meta.env.VITE_API_URL}/account/${
-            this.selectedAccount.id
-          }/tags`
-        );
+        const result = await axios.get(`${import.meta.env.VITE_API_URL}/account/${this.selectedAccount.id}/tags`);
 
         this.tags = result.data;
       }
@@ -90,8 +84,7 @@ export const useMainStore = defineStore("Main", {
       debtors: Debtor[];
       tags: string[];
     }): Promise<StrictUseAxiosReturn<any, AxiosResponse<any>, any>> {
-      const { payerId, description, amount, eventDate, debtors, tags } =
-        payload;
+      const { payerId, description, amount, eventDate, debtors, tags } = payload;
 
       const requestPayload = {
         method: "POST",
@@ -109,11 +102,7 @@ export const useMainStore = defineStore("Main", {
 
       const authStore = useAuthStore();
 
-      const result = await useAxios(
-        `account/${payerId}/cost`,
-        requestPayload,
-        authStore.axiosInstance
-      );
+      const result = await useAxios(`account/${payerId}/cost`, requestPayload, authStore.axiosInstance);
 
       return result;
     },

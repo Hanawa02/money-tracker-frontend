@@ -3,12 +3,8 @@
     <div class="w-full" :class="{ 'font-semibold': selectedAccountIsDebtor }">
       {{ accountDebtor?.name }}
     </div>
-    <div class="flex-shrink-0 mr-4 text-gray">
-      {{ formattedPercentage }}<small>%</small>
-    </div>
-    <div class="flex-shrink-0 font-semibold">
-      {{ formattedAmount }}<small> €</small>
-    </div>
+    <div class="flex-shrink-0 mr-4 text-gray">{{ formattedPercentage }}<small>%</small></div>
+    <div class="flex-shrink-0 font-semibold">{{ formattedAmount }}<small> €</small></div>
   </div>
 </template>
 
@@ -37,11 +33,7 @@ const formattedAmount = computed((): string => {
 const formattedPercentage = computed((): string => {
   return ((props.debtor.amount * 100) / props.cost.amount).toFixed(2);
 });
-const accountDebtor = computed(() =>
-  mainStore.getAccountById(props.debtor.account_id)
-);
+const accountDebtor = computed(() => mainStore.getAccountById(props.debtor.account_id));
 
-const selectedAccountIsDebtor = computed(
-  () => accountDebtor.value?.id === selectedAccount?.id
-);
+const selectedAccountIsDebtor = computed(() => accountDebtor.value?.id === selectedAccount?.id);
 </script>

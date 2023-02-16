@@ -7,20 +7,18 @@
     <div class="grid grid-cols-2 gap-4 mb-4">
       <account-selector
         :label="$t('pages.transactions.filterByAccount')"
+        :selected-account-id="accountIdFilter"
         @change="updateFilterByAccount"
-        :selectedAccountId="accountIdFilter"
       ></account-selector>
 
       <text-input
-        v-model.lowerCase="searchFilter"
         id="search-filter"
+        v-model.lowerCase="searchFilter"
         :label="$t('pages.transactions.searchFilter.label')"
         :placeholder="$t('pages.transactions.searchFilter.placeholder')"
       />
 
-      <div
-        class="flex flex-col col-span-2 pt-2 pb-3 px-4 rounded-lg shadow-card"
-      >
+      <div class="flex flex-col col-span-2 pt-2 pb-3 px-4 rounded-lg shadow-card">
         <m-label>
           {{ $t("pages.transactions.transactionTypeFilter.label") }}
         </m-label>
@@ -30,27 +28,19 @@
             id="all-transactions"
             v-model="transactionTypeFilter"
             value="all"
-            :label="
-              $t('pages.transactions.transactionTypeFilter.optionLabels.all')
-            "
+            :label="$t('pages.transactions.transactionTypeFilter.optionLabels.all')"
           />
           <radio-tag
             id="cost-transactions"
             v-model="transactionTypeFilter"
             value="cost"
-            :label="
-              $t('pages.transactions.transactionTypeFilter.optionLabels.cost')
-            "
+            :label="$t('pages.transactions.transactionTypeFilter.optionLabels.cost')"
           />
           <radio-tag
             id="payment-transactions"
             v-model="transactionTypeFilter"
             value="payment"
-            :label="
-              $t(
-                'pages.transactions.transactionTypeFilter.optionLabels.payment'
-              )
-            "
+            :label="$t('pages.transactions.transactionTypeFilter.optionLabels.payment')"
           />
         </div>
       </div>
@@ -64,10 +54,7 @@
     </div>
   </div>
   <div class="p-4 max-w-md mx-auto bg-white flex fixed w-full bottom-0 left-0">
-    <m-button
-      @click="goBack"
-      class="bg-white border-mid-primary border text-mid-primary w-full"
-    >
+    <m-button class="bg-white border-mid-primary border text-mid-primary w-full" @click="goBack">
       {{ $t("pages.transactions.goBackButton") }}
     </m-button>
   </div>
@@ -125,9 +112,7 @@ function updateFilterByAccount(accountId: string) {
 /* Costs */
 
 const filteredCosts = computed<Cost[]>(() => {
-  return mainStore.costs
-    .filter(filterCostBySearch)
-    .filter(filterCostByAccountId);
+  return mainStore.costs.filter(filterCostBySearch).filter(filterCostByAccountId);
 });
 
 function filterCostBySearch(cost: Cost): boolean {
@@ -143,17 +128,13 @@ function filterCostByAccountId(cost: Cost): boolean {
   return (
     !accountIdFilter.value ||
     cost.account_id === accountIdFilter.value ||
-    cost.debtors
-      .map((debtor) => debtor.account_id)
-      .includes(accountIdFilter.value)
+    cost.debtors.map((debtor) => debtor.account_id).includes(accountIdFilter.value)
   );
 }
 
 /* Payments */
 const filteredPayments = computed<Payment[]>(() => {
-  return mainStore.payments
-    .filter(filterPaymentByAccountId)
-    .filter(filterPaymentBySearch);
+  return mainStore.payments.filter(filterPaymentByAccountId).filter(filterPaymentBySearch);
 });
 
 function filterPaymentBySearch(payment: Payment): boolean {

@@ -1,38 +1,26 @@
 <template>
   <div class="grid grid-cols-2 gap-2 relative">
-    <button
-      class="
-        absolute
-        -right-2
-        -top-2
-        p-1
-        bg-lightest-primary
-        rounded-full
-        shadow
-        z-10
-      "
-      @click="removeDebtor"
-    >
+    <button class="absolute -right-2 -top-2 p-1 bg-lightest-primary rounded-full shadow z-10" @click="removeDebtor">
       <m-icon icon="close" class="w-6 h-6" />
     </button>
     <account-selector
       label="Debtor"
-      @change="updateAccountId"
-      :selectedAccountId="debtor.account_id"
-      :hiddenAccountIds="getFilteredAccountIds()"
+      :selected-account-id="debtor.account_id"
+      :hidden-account-ids="getFilteredAccountIds()"
       class="col-span-2"
+      @change="updateAccountId"
     ></account-selector>
 
     <text-input
-      :modelValue="debtorPercentage"
       :id="`percentage-input-${debtor.account_id}`"
+      :model-value="debtorPercentage"
       :label="$t('pages.createCost.percentageInput.label')"
       :disabled="true"
     />
 
     <number-input
-      v-model="debtor.amount"
       :id="`amount-input-${debtor.account_id}`"
+      v-model="debtor.amount"
       :label="$t('pages.createCost.amountInput.label')"
       :step="0.01"
     />
@@ -66,9 +54,7 @@ function removeDebtor() {
 }
 
 function getFilteredAccountIds(): string[] {
-  return props.debtors
-    .map((item) => item.account_id)
-    .filter((item) => item !== props.debtor.account_id);
+  return props.debtors.map((item) => item.account_id).filter((item) => item !== props.debtor.account_id);
 }
 
 function updateAccountId(newValue: string): void {
@@ -82,8 +68,6 @@ const debtorPercentage = computed<string>(() => {
   if (!props.costAmount) {
     return "0";
   }
-  return ((props.debtor.amount / props.costAmount) * 100)
-    .toFixed(2)
-    .replace(".00", "");
+  return ((props.debtor.amount / props.costAmount) * 100).toFixed(2).replace(".00", "");
 });
 </script>

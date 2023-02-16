@@ -4,20 +4,20 @@
       {{ $t("pages.createCost.header") }}
     </h1>
     <date-input
+      id="event-date"
       v-model="eventDate"
       :label="$t('pages.createCost.dateInput.label')"
-      id="event-date"
       class="mb-4"
     ></date-input>
     <account-selector
       label="Payer"
-      @change="updatePayer"
-      :selectedAccountId="payer?.id"
+      :selected-account-id="payer?.id"
       class="mb-4"
+      @change="updatePayer"
     ></account-selector>
     <text-input
-      v-model="description"
       id="event-description"
+      v-model="description"
       :label="$t('pages.createCost.descriptionInput.label')"
       :placeholder="$t('pages.createCost.descriptionInput.placeholder')"
       class="mb-4"
@@ -30,11 +30,7 @@
       :min="0"
       class="mb-4"
     />
-    <tag-input
-      :label="$t('pages.createCost.tagInput.label')"
-      id="tags"
-      v-model="tags"
-    ></tag-input>
+    <tag-input id="tags" v-model="tags" :label="$t('pages.createCost.tagInput.label')"></tag-input>
 
     <div class="flex flex-col justify-center my-8 p-2 shadow-card rounded">
       <h2 class="text-xl font-bold text-mid-primary mb-4">
@@ -43,42 +39,26 @@
 
       <template v-for="(debtor, index) of debtors" :key="debtor.account_id">
         <cost-debtor-data
-          class="mb-6"
           v-model:debtor="debtors[index]"
+          class="mb-6"
           :debtors="debtors"
-          :costAmount="amount"
+          :cost-amount="amount"
           @removeDebtor="removeDebtor(debtor.account_id)"
         />
       </template>
-      <m-button
-        @click="addDebtor('')"
-        class="border border-mid-primary text-mid-primary w-full mb-4"
-      >
+      <m-button class="border border-mid-primary text-mid-primary w-full mb-4" @click="addDebtor('')">
         {{ $t("pages.createCost.debtors.addAnotherDebtorButton") }}
       </m-button>
     </div>
-    <div
-      v-if="errorMessage"
-      class="
-        bg-lightest-red
-        text-dark-red
-        rounded
-        p-3
-        mb-8
-        border border-light-red
-      "
-    >
+    <div v-if="errorMessage" class="bg-lightest-red text-dark-red rounded p-3 mb-8 border border-light-red">
       {{ errorMessage }}
     </div>
 
     <div class="flex gap-4 mt-8">
-      <m-button
-        @click="goBack"
-        class="bg-white border-mid-primary border text-mid-primary w-full"
-      >
+      <m-button class="bg-white border-mid-primary border text-mid-primary w-full" @click="goBack">
         {{ $t("pages.createCost.cancelButton") }}
       </m-button>
-      <m-button @click="addCost" class="bg-mid-primary text-white w-full">
+      <m-button class="bg-mid-primary text-white w-full" @click="addCost">
         {{ $t("pages.createCost.addCostButton") }}
       </m-button>
     </div>
@@ -135,16 +115,12 @@ function addDebtor(account_id: string = "") {
 }
 
 const debtorsAmountSum = computed(() =>
-  debtors.value
-    .map((debtor) => debtor.amount)
-    .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+  debtors.value.map((debtor) => debtor.amount).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
 );
 
 function updateDebtorsAmount() {
   const numberOfDebtors = debtors.value.length;
-  const valuePerDebtor = parseFloat(
-    (amount.value / numberOfDebtors).toFixed(2)
-  );
+  const valuePerDebtor = parseFloat((amount.value / numberOfDebtors).toFixed(2));
   const lastDebtor = debtors.value.pop();
 
   debtors.value = debtors.value.map((debtor) => {
@@ -155,9 +131,7 @@ function updateDebtorsAmount() {
   });
 
   if (lastDebtor) {
-    const lastDebtorAmount = parseFloat(
-      (amount.value - debtorsAmountSum.value).toFixed(2)
-    );
+    const lastDebtorAmount = parseFloat((amount.value - debtorsAmountSum.value).toFixed(2));
     debtors.value.push({
       ...lastDebtor,
       amount: lastDebtorAmount,
@@ -166,9 +140,7 @@ function updateDebtorsAmount() {
 }
 
 function removeDebtor(accountId: string) {
-  debtors.value = debtors.value.filter(
-    (debtor) => debtor.account_id !== accountId
-  );
+  debtors.value = debtors.value.filter((debtor) => debtor.account_id !== accountId);
 }
 
 onMounted(() => {
@@ -188,19 +160,13 @@ function goToHomePage() {
 const errorMessage = ref("");
 
 async function addCost() {
-  if (
-    !payer.value?.id ||
-    debtors.value?.length <= 0 ||
-    description.value === "" ||
-    amount.value === 0
-  ) {
+  if (!payer.value?.id || debtors.value?.length <= 0 || description.value === "" || amount.value === 0) {
     errorMessage.value = "Some data is missing!";
     return;
   }
 
   if (debtorsAmountSum.value !== amount.value) {
-    errorMessage.value =
-      "The total amount is not matching the sum of individual amounts";
+    errorMessage.value = "The total amount is not matching the sum of individual amounts";
     return;
   }
 
@@ -220,8 +186,7 @@ async function addCost() {
   }
 
   if (error) {
-    errorMessage.value =
-      error.value?.response?.data.error || error.value?.response?.data || "";
+    errorMessage.value = error.value?.response?.data.error || error.value?.response?.data || "";
   }
 }
 </script>

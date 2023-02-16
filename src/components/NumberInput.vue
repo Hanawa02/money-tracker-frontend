@@ -9,7 +9,7 @@
     data-type="input-field"
   >
     <div class="flex flex-col w-full">
-      <m-label :has-error="hasError" @click="focusInput" :disabled="disabled">
+      <m-label :has-error="hasError" :disabled="disabled" @click="focusInput">
         {{ label }}
         <span v-if="required" class="ml-0.5 text-gray">*</span>
       </m-label>
@@ -26,12 +26,12 @@
           'text-gray cursor-not-allowed': disabled,
         }"
         :placeholder="placeholder"
-        @input="updateValue"
-        @keyup.enter="handleEnterKey"
         :disabled="disabled"
         :step="step"
         :min="min"
         :max="max"
+        @input="updateValue"
+        @keyup.enter="handleEnterKey"
       />
     </div>
   </div>

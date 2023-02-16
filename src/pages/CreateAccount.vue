@@ -3,35 +3,16 @@
     <h1 class="text-3xl text-center mb-8 font-bold text-dark-primary">
       {{ $t("pages.createAccount.header") }}
     </h1>
-    <text-input
-      v-model="name"
-      id="account name"
-      label="Name"
-      :required="true"
-      class="mb-8"
-    ></text-input>
+    <text-input id="account name" v-model="name" label="Name" :required="true" class="mb-8"></text-input>
 
-    <div
-      v-if="errorMessage"
-      class="
-        bg-lightest-red
-        text-dark-red
-        rounded
-        p-3
-        mb-8
-        border border-light-red
-      "
-    >
+    <div v-if="errorMessage" class="bg-lightest-red text-dark-red rounded p-3 mb-8 border border-light-red">
       {{ errorMessage }}
     </div>
     <div class="flex gap-4">
-      <m-button
-        @click="goBack"
-        class="bg-white border-mid-primary border text-mid-primary w-full"
-      >
+      <m-button class="bg-white border-mid-primary border text-mid-primary w-full" @click="goBack">
         {{ $t("pages.createAccount.cancelButton") }}
       </m-button>
-      <m-button @click="addAccount" class="bg-mid-primary text-white w-full">
+      <m-button class="bg-mid-primary text-white w-full" @click="addAccount">
         {{ $t("pages.createAccount.addAccountButton") }}
       </m-button>
     </div>
@@ -81,8 +62,7 @@ async function addAccount() {
   }
 
   if (error) {
-    errorMessage.value =
-      error.value?.response?.data.error || error.value?.response?.data || "";
+    errorMessage.value = error.value?.response?.data.error || error.value?.response?.data || "";
   }
 }
 

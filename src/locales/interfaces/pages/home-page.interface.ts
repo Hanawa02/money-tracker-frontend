@@ -8,4 +8,5 @@ export default interface HomePage {
   newCost: string;
   newAccount: string;
   seeTransactions: string;
+  bulkAddCosts: string;
 }

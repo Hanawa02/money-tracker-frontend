@@ -10,6 +10,7 @@ const home: HomePage = {
   newCost: "New Cost",
   newAccount: "Create Account",
   seeTransactions: "See Transactions",
+  bulkAddCosts: "Bulk add costs",
 };
 
 export default home;

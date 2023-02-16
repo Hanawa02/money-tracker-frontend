@@ -33,6 +33,11 @@ const transactionsPage: RouteData = {
   name: "transactions",
 };
 
+const bulkAddCostsPage: RouteData = {
+  path: "/bulk-add-costs",
+  name: "bulkAddCosts",
+};
+
 export default {
   homePage,
   createCostPage,
@@ -40,4 +45,5 @@ export default {
   createAccountPage,
   loginPage,
   transactionsPage,
+  bulkAddCostsPage,
 };

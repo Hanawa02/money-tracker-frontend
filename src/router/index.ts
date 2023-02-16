@@ -8,6 +8,7 @@ import CreatePayment from "~/pages/CreatePayment.vue";
 import Home from "~/pages/HomePage.vue";
 import Login from "~/pages/LoginPage.vue";
 import Transactions from "~/pages/Transactions.vue";
+import BulkAddCosts from "~/pages/BulkAddCosts.vue";
 
 export const routes = [
   {
@@ -33,6 +34,10 @@ export const routes = [
   {
     ...paths.transactionsPage,
     component: Transactions,
+  },
+  {
+    ...paths.bulkAddCostsPage,
+    component: BulkAddCosts,
   },
 ];
 

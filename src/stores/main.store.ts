@@ -35,19 +35,23 @@ export const useMainStore = defineStore("Main", {
   actions: {
     async loadAccounts() {
       const result = await axios.get(`${import.meta.env.VITE_API_URL}/account`);
-      return result.data;
+      this.accounts = result.data;
     },
     async loadSnapshots() {
       const result = await axios.get(`${import.meta.env.VITE_API_URL}/snapshot`);
-      return result.data;
+      this.snapshots = result.data;
     },
     async loadCosts() {
       const result = await axios.get(`${import.meta.env.VITE_API_URL}/cost`);
-      return result.data;
+      this.costs = result.data.map((item: Cost) => {
+        return { ...item, discriminator: "Cost" };
+      });
     },
     async loadPayments() {
       const result = await axios.get(`${import.meta.env.VITE_API_URL}/payment`);
-      return result.data;
+      this.payments = result.data.map((item: Payment) => {
+        return { ...item, discriminator: "Payment" };
+      });
     },
     async loadTags() {
       if (this.selectedAccount) {
@@ -56,23 +60,8 @@ export const useMainStore = defineStore("Main", {
         this.tags = result.data;
       }
     },
-    async loadData() {
-      const [accounts, snapshots, costs, payments] = await Promise.all([
-        this.loadAccounts(),
-        this.loadSnapshots(),
-        this.loadCosts(),
-        this.loadPayments(),
-        this.loadTags(),
-      ]);
-
-      this.accounts = accounts;
-      this.snapshots = snapshots;
-      this.costs = costs.map((item: Cost) => {
-        return { ...item, discriminator: "Cost" };
-      });
-      this.payments = payments.map((item: Payment) => {
-        return { ...item, discriminator: "Payment" };
-      });
+    loadData() {
+      Promise.all([this.loadAccounts(), this.loadSnapshots(), this.loadCosts(), this.loadPayments(), this.loadTags()]);
     },
     async selectAccount(accountId: string) {
       this.selectedAccountId = accountId;

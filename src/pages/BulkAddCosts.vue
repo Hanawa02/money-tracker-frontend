@@ -17,7 +17,9 @@
         <div class="flex flex-col gap-y-4 overflow-y-auto max-h-[calc(100vh-15rem)] p-4">
           <cost-card
             class="border-2"
-            :class="hasSameAmountAndDate(item) ? 'border-red -order-1' : 'border-transparent'"
+            :class="
+              hasSameAmountAndDate(item) ? 'border-red -order-1 sticky top-0 mb-32 bg-white' : 'border-transparent'
+            "
             v-for="item of sortedCosts"
             :key="item.id"
             :cost="item"

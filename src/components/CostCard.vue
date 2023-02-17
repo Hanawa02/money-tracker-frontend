@@ -1,6 +1,10 @@
 <template>
-  <details v-if="accountPayer" class="flex flex-col shadow-card p-3 rounded">
+  <details v-if="accountPayer" class="flex flex-col shadow-card p-3 rounded relative">
     <summary class="flex flex-col mb-2">
+      <m-button variant="close-icon" class="absolute -right-3 -top-3 p-1 z-10" @click.prevent="deleteCost">
+        <m-icon v-if="isBeingDeleted" icon="euro" class="w-6 h-6 animate-spin mx-auto" />
+        <m-icon v-else icon="close" class="w-6 h-6" />
+      </m-button>
       <div class="flex gap-2.5 items-center">
         <span class="flex-shrink-0 text-mid-gray text-sm">{{ eventDate }}</span>
         <span class="w-full truncate">{{ description }}</span>
@@ -38,12 +42,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useDateFormat } from "@vueuse/core";
 import { useMainStore } from "~/stores/main.store";
 
 import Cost from "~/interfaces/cost";
 import MTag from "~/components/MTag.vue";
+import MIcon from "~/components/icons/MIcon.vue";
+import MButton from "~/components/MButton.vue";
 import CostCardDebtor from "~/components/CostCardDebtor.vue";
 
 interface IProps {
@@ -67,4 +73,13 @@ const description = computed(() => props.cost.description || "-");
 const accountPayer = computed(() => mainStore.getAccountById(props.cost.account_id));
 
 const selectedAccountIsPaying = computed(() => accountPayer.value?.id === selectedAccount?.id);
+
+const isBeingDeleted = ref<boolean>(false);
+
+async function deleteCost() {
+  isBeingDeleted.value = true;
+  await mainStore.deleteCost(props.cost);
+  isBeingDeleted.value = false;
+  mainStore.loadData();
+}
 </script>

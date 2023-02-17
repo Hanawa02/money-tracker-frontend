@@ -107,6 +107,22 @@ export const useMainStore = defineStore("Main", {
 
       return result;
     },
+    async deleteCost(payload: {
+      account_id: string;
+      id: string;
+    }): Promise<StrictUseAxiosReturn<any, AxiosResponse<any>, any>> {
+      const { account_id, id } = payload;
+
+      const requestPayload = {
+        method: "DELETE",
+      };
+
+      const authStore = useAuthStore();
+
+      const result = await useAxios(`account/${account_id}/cost/${id}`, requestPayload, authStore.axiosInstance);
+
+      return result;
+    },
   },
   getters: {
     selectedAccount(): Account | undefined {

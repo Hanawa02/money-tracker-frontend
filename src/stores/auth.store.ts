@@ -30,7 +30,7 @@ export const useAuthStore = defineStore("Auth", {
 
     logout() {
       axios.defaults.headers.common["Authorization"] = "";
-      sessionStorage.clear();
+      localStorage.clear();
       this.isAuthenticated = false;
     },
 
@@ -46,7 +46,7 @@ export const useAuthStore = defineStore("Auth", {
           },
         },
       });
-      sessionStorage.setItem("accessToken", accessToken.toString());
+      localStorage.setItem("accessToken", accessToken.toString());
       this.setIsAuthenticated(true);
     },
   },

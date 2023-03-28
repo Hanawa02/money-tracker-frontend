@@ -20,9 +20,9 @@ export default function (to: RouteLocationNormalized): void | Error | RouteLocat
     return to;
   }
 
-  const sessionAccessToken = sessionStorage.getItem("accessToken");
-  if (sessionAccessToken) {
-    authStore.loginUser(sessionAccessToken);
+  const localStorageAccessToken = localStorage.getItem("accessToken");
+  if (localStorageAccessToken) {
+    authStore.loginUser(localStorageAccessToken);
   }
 
   const isLoginPage = to.name === routes.loginPage.name;

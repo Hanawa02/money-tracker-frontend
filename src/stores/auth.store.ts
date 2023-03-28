@@ -18,7 +18,7 @@ export const useAuthStore = defineStore("Auth", {
       this.logout();
 
       const apiUrl = import.meta.env.VITE_API_URL;
-      const redirectTo = import.meta.env.VITE_BASE_URL;
+      const redirectTo = import.meta.env.VITE_BASE_URL || import.meta.env.CF_PAGES_URL;
       const url = `${apiUrl}/auth/discord?origin_uri=${redirectTo}`;
 
       window.location.href = url;

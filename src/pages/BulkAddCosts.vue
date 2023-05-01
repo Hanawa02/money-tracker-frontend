@@ -18,7 +18,7 @@
           <cost-card
             class="border-2"
             :class="
-              hasSameAmountAndDate(item) ? 'border-red -order-1 sticky top-0 mb-32 bg-white' : 'border-transparent'
+              hasSameAmountAndDate(item) ? 'border-red -order-1 sticky top-0 mb-32 bg-white z-10' : 'border-transparent'
             "
             v-for="item of sortedCosts"
             :key="item.id"

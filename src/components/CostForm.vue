@@ -181,6 +181,9 @@ async function addCost(): Promise<void> {
     errorMessage.value = "The total amount is not matching the sum of individual amounts";
     return;
   }
+
+  errorMessage.value = "";
+
   isLoading.value = true;
   const costData = {
     payerId: payer.value?.id,

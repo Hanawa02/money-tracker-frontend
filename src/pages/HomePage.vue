@@ -26,9 +26,8 @@
       <h2 class="text-lg font-medium text-dark-primary mb-4 w-full">
         {{ $t("pages.home.monthlyCosts") }}
       </h2>
-      <div class="flex gap-8 justify-between flex-wrap">
-        <monthly-costs />
-      </div>
+
+      <monthly-costs />
     </div>
 
     <div class="fixed bottom-0 left-0 w-full">

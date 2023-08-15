@@ -158,7 +158,15 @@ export const useMainStore = defineStore("Main", {
         });
       });
 
-      return monthlyCosts;
+      return Object.values(monthlyCosts).sort((a, b) => {
+        const aDateParts = a.month.split("-");
+        const bDateParts = b.month.split("-");
+
+        if (aDateParts[0] === bDateParts[0]) {
+          return parseInt(bDateParts[1]) - parseInt(aDateParts[1]);
+        }
+        return parseInt(bDateParts[0]) - parseInt(aDateParts[0]);
+      });
     },
   },
 });

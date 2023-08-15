@@ -11,6 +11,7 @@ const home: HomePage = {
   newAccount: "Create Account",
   seeTransactions: "See Transactions",
   bulkAddCosts: "Bulk add costs",
+  monthlyCosts: "Monthly costs",
 };
 
 export default home;

@@ -133,5 +133,32 @@ export const useMainStore = defineStore("Main", {
     getAccountById(state) {
       return (id: string): Account | undefined => state.accounts.find((item) => item.id === id);
     },
+    monthlyCosts(state) {
+      const monthlyCosts: { [key: string]: { month: string; items: { tag: string; value: number }[] } } = {};
+
+      state.costs.forEach((cost) => {
+        const month = useDateFormat(cost.event_date, "YYYY-MM").value;
+        const tags = cost.tags?.length > 0 ? cost.tags : ["untagged"];
+
+        tags.forEach((tag) => {
+          if (monthlyCosts[month]) {
+            const index = monthlyCosts[month].items.findIndex((item) => item.tag === tag);
+
+            if (index === -1) {
+              monthlyCosts[month].items.push({ tag: tag, value: cost.amount });
+            } else {
+              monthlyCosts[month].items[index].value += cost.amount;
+            }
+          } else {
+            monthlyCosts[month] = {
+              month: month,
+              items: [{ tag: tag, value: cost.amount }],
+            };
+          }
+        });
+      });
+
+      return monthlyCosts;
+    },
   },
 });

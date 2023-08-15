@@ -10,7 +10,7 @@
       <account-search-selector />
     </template>
 
-    <div v-if="selectedAccount" class="flex-col bg-lightest-gray rounded-md p-4">
+    <div v-if="selectedAccount" class="flex-col bg-lightest-gray rounded-md p-4 mb-8">
       <h2 class="text-lg font-medium text-dark-primary mb-4 w-full">
         {{ $t("pages.home.status") }}
       </h2>
@@ -21,6 +21,16 @@
         </div>
       </div>
     </div>
+
+    <div v-if="selectedAccount" class="flex-col bg-lightest-gray rounded-md p-4">
+      <h2 class="text-lg font-medium text-dark-primary mb-4 w-full">
+        {{ $t("pages.home.monthlyCosts") }}
+      </h2>
+      <div class="flex gap-8 justify-between flex-wrap">
+        <monthly-costs />
+      </div>
+    </div>
+
     <div class="fixed bottom-0 left-0 w-full">
       <div class="grid grid-cols-2 gap-4 py-4 px-4 w-full max-w-md mx-auto">
         <template v-if="selectedAccount">
@@ -58,6 +68,7 @@ import AccountSearchSelector from "~/components/AccountSearchSelector.vue";
 import SnapshotCard from "~/components/SnapshotCard.vue";
 import MButton from "~/components/MButton.vue";
 import useNavigation from "~/composables/navigation.composable";
+import MonthlyCosts from "~/components/MonthlyCosts.vue";
 
 const mainStore = useMainStore();
 

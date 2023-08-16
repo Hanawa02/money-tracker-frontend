@@ -10,4 +10,5 @@ export default interface HomePage {
   seeTransactions: string;
   bulkAddCosts: string;
   monthlyCosts: string;
+  monthlyAverages: string;
 }

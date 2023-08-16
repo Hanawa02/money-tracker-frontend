@@ -12,6 +12,7 @@ const home: HomePage = {
   seeTransactions: "See Transactions",
   bulkAddCosts: "Bulk add costs",
   monthlyCosts: "Monthly costs",
+  monthlyAverages: "Monthly Averages",
 };
 
 export default home;

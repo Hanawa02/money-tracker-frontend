@@ -133,14 +133,15 @@ export const useMainStore = defineStore("Main", {
     getAccountById(state) {
       return (id: string): Account | undefined => state.accounts.find((item) => item.id === id);
     },
-    monthlyCosts(state) {
-      const monthlyCosts: { [key: string]: { month: string; items: { tag: string; value: number }[] } } = {};
-
-      const sortedCosts = state.costs.sort((a, b) => {
+    sortedCosts(state) {
+      return state.costs.sort((a, b) => {
         return a.event_date < b.event_date ? 1 : -1; // latest costs first
       });
+    },
+    monthlyCosts() {
+      const monthlyCosts: { [key: string]: { month: string; items: { tag: string; value: number }[] } } = {};
 
-      sortedCosts.forEach((cost) => {
+      this.sortedCosts.forEach((cost) => {
         const month = useDateFormat(cost.event_date, "YYYY-MM").value;
         const tags = cost.tags?.length > 0 ? cost.tags : ["untagged"];
 
@@ -163,6 +164,41 @@ export const useMainStore = defineStore("Main", {
       });
 
       return monthlyCosts;
+    },
+    averageMonthlyCostsPerTag() {
+      const aggregatedData: {
+        [key: string]: {
+          value: number;
+          months: string[];
+        };
+      } = {};
+
+      this.sortedCosts.forEach((cost) => {
+        const month = useDateFormat(cost.event_date, "YYYY-MM").value;
+        const tags = cost.tags?.length > 0 ? cost.tags : ["untagged"];
+
+        tags.forEach((tag) => {
+          if (aggregatedData[tag]) {
+            aggregatedData[tag].value += cost.amount;
+            aggregatedData[tag].months.push(month);
+          } else {
+            aggregatedData[tag] = {
+              value: cost.amount,
+              months: [month],
+            };
+          }
+        });
+      });
+
+      const averages = Object.entries(aggregatedData).map(([key, value]) => {
+        const monthCount = [...new Set(value.months)].length;
+        return {
+          tag: key,
+          value: value.value / monthCount,
+        };
+      });
+
+      return averages;
     },
   },
 });

@@ -22,6 +22,14 @@
       </div>
     </div>
 
+    <div v-if="selectedAccount" class="flex-col bg-lightest-gray rounded-md p-4 mb-8">
+      <h2 class="text-lg font-medium text-dark-primary mb-4 w-full">
+        {{ $t("pages.home.monthlyAverages") }}
+      </h2>
+
+      <monthly-averages />
+    </div>
+
     <div v-if="selectedAccount" class="flex-col bg-lightest-gray rounded-md p-4">
       <h2 class="text-lg font-medium text-dark-primary mb-4 w-full">
         {{ $t("pages.home.monthlyCosts") }}
@@ -68,6 +76,7 @@ import SnapshotCard from "~/components/SnapshotCard.vue";
 import MButton from "~/components/MButton.vue";
 import useNavigation from "~/composables/navigation.composable";
 import MonthlyCosts from "~/components/MonthlyCosts.vue";
+import MonthlyAverages from "~/components/MonthlyAverages.vue";
 
 const mainStore = useMainStore();
 

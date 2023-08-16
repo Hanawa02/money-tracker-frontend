@@ -1,13 +1,20 @@
 <template>
-  <div v-if="monthlyCosts" class="w-full">
-    <select class="font-bold text-lg mb-4" v-model="selectedMonth">
-      <option v-for="(item, index) of monthlyCosts" :key="index" :value="item.month">
-        {{ item.month }}
-      </option>
-    </select>
+  <div v-if="months" class="w-full">
+    <div class="flex mb-4 gap-x-4">
+      <select class="font-bold text-lg" v-model="selectedMonth">
+        <option v-for="month of months" :key="month" :value="month">
+          {{ month }}
+        </option>
+      </select>
+      <select class="text-lg" v-model="sortBy">
+        <option v-for="option of sortOptions" :key="option" :value="option">
+          {{ option }}
+        </option>
+      </select>
+    </div>
 
-    <div class="grid grid-cols-2 gap-x-4 gap-y-2 overflow-auto max-h-48" v-if="monthData">
-      <template v-for="(item, index) of monthData.items" :key="index">
+    <div class="grid grid-cols-2 gap-x-4 gap-y-2 overflow-auto max-h-48" v-if="costs">
+      <template v-for="item of costs" :key="item.tag">
         <div class="w-full capitalize">{{ item.tag }}</div>
         <div class="w-full">{{ item.value.toFixed(2) }}€</div>
       </template>
@@ -22,19 +29,46 @@ import { useMainStore } from "~/stores/main.store";
 
 const mainStore = useMainStore();
 
-const monthlyCosts = computed(() => {
-  return Object.values(mainStore.monthlyCosts);
+const months = computed(() => {
+  return Object.keys(mainStore.monthlyCosts);
 });
 
 const selectedMonth = ref<string>("");
 
-watch(monthlyCosts, async (costs) => {
-  if (costs.length > 0) {
-    selectedMonth.value = costs[0].month;
+watch(months, async (newMonths) => {
+  if (newMonths.length > 0) {
+    selectedMonth.value = newMonths[0];
   }
 });
 
-const monthData = computed(() => {
-  return mainStore.monthlyCosts[selectedMonth.value];
+const costs = computed(() => {
+  const monthData = mainStore.monthlyCosts[selectedMonth.value];
+
+  if (!monthData) {
+    return [];
+  }
+  return monthData.items.sort(sortFunction.value);
+});
+
+const sortBy = ref("tag");
+const sortOptions = ref(["tag", "value asc", "value desc"]);
+
+interface CostInfo {
+  tag: string;
+  value: number;
+}
+
+const sortFunction = computed(() => {
+  return (a: CostInfo, b: CostInfo) => {
+    if (sortBy.value === "tag") {
+      return a.tag.localeCompare(b.tag);
+    }
+
+    if (sortBy.value === "value desc") {
+      return b.value - a.value;
+    }
+
+    return a.value - b.value;
+  };
 });
 </script>

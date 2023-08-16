@@ -136,7 +136,11 @@ export const useMainStore = defineStore("Main", {
     monthlyCosts(state) {
       const monthlyCosts: { [key: string]: { month: string; items: { tag: string; value: number }[] } } = {};
 
-      state.costs.forEach((cost) => {
+      const sortedCosts = state.costs.sort((a, b) => {
+        return a.event_date < b.event_date ? 1 : -1; // latest costs first
+      });
+
+      sortedCosts.forEach((cost) => {
         const month = useDateFormat(cost.event_date, "YYYY-MM").value;
         const tags = cost.tags?.length > 0 ? cost.tags : ["untagged"];
 
@@ -158,15 +162,7 @@ export const useMainStore = defineStore("Main", {
         });
       });
 
-      return Object.values(monthlyCosts).sort((a, b) => {
-        const aDateParts = a.month.split("-");
-        const bDateParts = b.month.split("-");
-
-        if (aDateParts[0] === bDateParts[0]) {
-          return parseInt(bDateParts[1]) - parseInt(aDateParts[1]);
-        }
-        return parseInt(bDateParts[0]) - parseInt(aDateParts[0]);
-      });
+      return monthlyCosts;
     },
   },
 });

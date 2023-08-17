@@ -1,6 +1,6 @@
 <template>
-  <div class="p-4">
-    <template v-if="!selectedAccount">
+  <div class="px-4 pt-4 flex flex-col flex-grow">
+    <div v-if="!selectedAccount" class="flex-grow">
       <h1 class="text-center mb-4 font-medium text-primary text-2xl w-full">
         {{ $t("pages.home.introduction") }}
       </h1>
@@ -8,38 +8,39 @@
         {{ $t("pages.home.selectAccountText") }}
       </h2>
       <account-search-selector />
-    </template>
+    </div>
 
-    <div v-if="selectedAccount" class="flex-col bg-lightest-gray rounded-md p-4 mb-8">
-      <h2 class="text-lg font-medium text-dark-primary mb-4 w-full">
-        {{ $t("pages.home.status") }}
-      </h2>
-      <div class="flex gap-8 justify-between flex-wrap">
-        <snapshot-card v-for="snapshot of snapshots" :key="snapshot.lender_account.id" :snapshot="snapshot" />
-        <div v-if="!snapshots?.length" class="">
-          {{ $t("pages.home.noSnapshot") }}
+    <div v-if="selectedAccount" class="flex flex-col gap-8 flex-grow">
+      <div class="flex-col bg-lightest-gray rounded-md p-4 shrink-0">
+        <h2 class="text-lg font-medium text-dark-primary mb-4 w-full">
+          {{ $t("pages.home.status") }}
+        </h2>
+        <div class="flex gap-8 justify-between flex-wrap">
+          <snapshot-card v-for="snapshot of snapshots" :key="snapshot.lender_account.id" :snapshot="snapshot" />
+          <div v-if="!snapshots?.length" class="">
+            {{ $t("pages.home.noSnapshot") }}
+          </div>
         </div>
       </div>
+
+      <div class="flex-col bg-lightest-gray rounded-md p-4 shrink-0">
+        <h2 class="text-lg font-medium text-dark-primary mb-4 w-full">
+          {{ $t("pages.home.monthlyAverages") }}
+        </h2>
+
+        <monthly-averages />
+      </div>
+
+      <div class="flex-col bg-lightest-gray rounded-md p-4 shrink-0">
+        <h2 class="text-lg font-medium text-dark-primary mb-4 w-full">
+          {{ $t("pages.home.monthlyCosts") }}
+        </h2>
+
+        <monthly-costs />
+      </div>
     </div>
-
-    <div v-if="selectedAccount" class="flex-col bg-lightest-gray rounded-md p-4 mb-8">
-      <h2 class="text-lg font-medium text-dark-primary mb-4 w-full">
-        {{ $t("pages.home.monthlyAverages") }}
-      </h2>
-
-      <monthly-averages />
-    </div>
-
-    <div v-if="selectedAccount" class="flex-col bg-lightest-gray rounded-md p-4">
-      <h2 class="text-lg font-medium text-dark-primary mb-4 w-full">
-        {{ $t("pages.home.monthlyCosts") }}
-      </h2>
-
-      <monthly-costs />
-    </div>
-
-    <div class="fixed bottom-0 left-0 w-full bg-white">
-      <div class="grid grid-cols-2 gap-4 py-4 px-4 w-full max-w-md mx-auto">
+    <div class="sticky lg:fixed bottom-0 left-0 w-full bg-white">
+      <div class="grid grid-cols-2 gap-4 py-4 lg:px-4 w-full max-w-md mx-auto">
         <template v-if="selectedAccount">
           <m-button class="hidden md:block col-span-2" @click="goToBulkAddCostsPage">
             {{ $t("pages.home.bulkAddCosts") }}

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full min-h-screen h-full mx-auto" :class="{ 'max-w-md': !isDesktopViewPage }">
+  <div class="flex flex-col w-full min-h-screen h-full mx-auto" :class="{ 'max-w-md': !isDesktopViewPage }">
     <header
       v-if="isAuthenticated"
       class="w-full border-b border-light-gray bg-white sticky top-0 flex p-4 items-center"

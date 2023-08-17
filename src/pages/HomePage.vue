@@ -38,7 +38,7 @@
       <monthly-costs />
     </div>
 
-    <div class="fixed bottom-0 left-0 w-full">
+    <div class="fixed bottom-0 left-0 w-full bg-white">
       <div class="grid grid-cols-2 gap-4 py-4 px-4 w-full max-w-md mx-auto">
         <template v-if="selectedAccount">
           <m-button class="hidden md:block col-span-2" @click="goToBulkAddCostsPage">

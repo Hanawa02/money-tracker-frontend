@@ -146,7 +146,7 @@ export const useMainStore = defineStore("Main", {
         const tags = cost.tags?.length > 0 ? cost.tags : ["untagged"];
 
         tags.forEach((tag) => {
-          const amount = cost.debtors.find((debtor) => debtor.account_id === this.selectedAccountId)?.amount;
+          const amount = cost.debtors.find((debtor) => debtor.account_id === this.selectedAccountId)?.amount || 0;
           if (monthlyCosts[month]) {
             const index = monthlyCosts[month].items.findIndex((item) => item.tag === tag);
 
@@ -179,7 +179,7 @@ export const useMainStore = defineStore("Main", {
         const tags = cost.tags?.length > 0 ? cost.tags : ["untagged"];
 
         tags.forEach((tag) => {
-          const amount = cost.debtors.find((debtor) => debtor.account_id === this.selectedAccountId)?.amount;
+          const amount = cost.debtors.find((debtor) => debtor.account_id === this.selectedAccountId)?.amount || 0;
 
           if (aggregatedData[tag]) {
             aggregatedData[tag].value += amount;
